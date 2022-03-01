@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feed</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/feed.css">
+  <link href="../css/bootstrap.css" rel="stylesheet" type="text/css" />
+  <link href="../css/profile.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container bootstrap snippets bootdey">
+      <div class="panel-body inf-content">
+        <div class="row">
+          <div class="col-md-4">
+            <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip" src=""
+              data-original-title="Usuario">
+            <ul title="Ratings" class="list-inline ratings text-center">
+              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <strong>Information</strong><br>
+            <div class="table-responsive">
+              <table class="table table-user-information">
+                <tbody>
+                  <tr>
+                    <td>
+                      <strong>
+                        <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                        ID-Number
+                      </strong>
+                    </td>
+                    <td class="text-primary">
+                      <%= user._id %>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <strong>
+                        <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                        Username
+                      </strong>
+                    </td>
+                    <td class="text-primary">
+                      <%= user.username %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>
+                        <span class="glyphicon glyphicon-envelope text-primary"></span>
+                        Email
+                      </strong>
+                    </td>
+                    <td class="text-primary">
+                      <%= user.email %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>
+                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                        created
+                      </strong>
+                    </td>
+                    <td class="text-primary">
+                      <%= user.createdAt %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <strong>
+                        <span class="glyphicon glyphicon-calendar text-primary"></span>
+                        Modified
+                      </strong>
+                    </td>
+                    <td class="text-primary">
+                      <%= user.updatedAt %>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <% if (user.posts !== undefined) { %>
+                <h4>Posts:</h4>
+                <div class="card-container">
+                  <% for (var i = 0; i < user.posts.length; i++) { %>
+
+                    <div class="card" style="margin-bottom: 1.2rem;">
+                      <div class="flex-row">
+                        <img src="<%= user.imageUrl %>" width="40px" alt="mitko photo"
+                          style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
+                        <p class="name">
+                          <%= user.posts[i].authorName %>
+                        </p>
+                      </div>
+                      <p>
+                        <%= user.posts[i].content %>
+                      </p>
+                      <img src="<%= user.posts[i].imageUrl %>" width="100%" alt="post photo">
+                    </div>
+
+                    <% } %>
+                </div>
+                <% } %>
+
+                <div class="control-group">
+                    <div class="controls">
+                      <a class="btn btn-secondary btn-lg active" role="button" href="<%=`/profile/${user._id}/edit`%>">
+                        Edit
+                      </a>
+                    </div>
+                  </div>
+                  <div class="control-group">
+                    <div class="controls">
+                      <a class="btn btn-secondary btn-lg active" role="button"
+                        href="<%=`/profile/${user._id}/delete?_method=DELETE`%>"
+                        onclick="return confirm('Are you sure you want to delete this profile?')">
+                        Delete
+                      </a>
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+      <script src="/js/bootstrap.js"></script>
+</body>
+
+</html>

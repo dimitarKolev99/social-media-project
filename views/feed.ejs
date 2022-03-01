@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media | Feed</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/feed.css">
+</head>
+
+<body>
+
+    
+
+        <% if (posts !== undefined) { %>
+            <div class="card-container">
+                <% for (var i=0; i < posts.length; i++) { %>
+                    <div class="card" style="margin-bottom: 1.2rem;">
+                        <div class="flex-row">
+                            <img src="" width="40px" alt="mitko photo"    
+                            style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
+                            <a class="name" href="/profile/<%= posts[i].authorId %>">
+                                <%= posts[i].authorName %>
+                            </a>
+                        </div>
+                        <p>
+                            <%= posts[i].content %>
+                        </p>
+                        <img src="<%= posts[i].imageUrl %>" width="100%" alt="post photo">
+                    </div>
+
+                    <% } %>
+            </div>
+            <% } %>
+
+   <!--  <div class="card-container">
+        <div class="card" style="margin-bottom: 1.2rem;">
+            <div class="flex-row">
+                <img src="./images/myPhoto.jpg" width="40px" alt="mitko photo"
+                    style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
+                <p class="name">Dimitar</p>
+            </div>
+            <img src="./images/bpw.video.jpg" width="100%" alt="post">
+        </div>
+
+        <div class="card" style="margin-bottom: 1.2rem;">
+            <div class="flex-row">
+                <img src="./images/myPhoto.jpg" width="40px" alt="mitko photo"
+                    style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
+                <p class="name">Dimitar</p>
+            </div>
+            <img src="./images/bpw.video.jpg" width="100%" alt="post">
+        </div>
+
+        <div class="card" style="margin-bottom: 1.2rem;">
+            <div class="flex-row">
+                <img src="./images/myPhoto.jpg" width="40px" alt="mitko photo"
+                    style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
+                <p class="name">Dimitar</p>
+            </div>
+            <p class="name">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+                deleniti veniam eius architecto reiciendis dolorum illo quidem
+                rem odit, magni magnam quas eum incidunt nihil aspernatur velit
+                officiis fugiat omnis voluptatum fuga et ex. Tempora officia,
+                omnis rem esse animi atque. Repellendus neque similique minima
+                nam eos nemo fugit necessitatibus.
+            </p>
+        </div>
+
+    </div> -->
+
+
+
+</body>
+
+</html>
