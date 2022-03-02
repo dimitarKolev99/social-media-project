@@ -2,15 +2,8 @@ const mongoose = require("mongoose");
 const User = require('./user.js');
 
 const postSchema = mongoose.Schema({
-    authorId:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true,
-    },
-    authorName:{
-        type: String,
-        required: true
-    }, 
+    authorId: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+
     content:{
         type: String,
         required: true

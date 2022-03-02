@@ -14,8 +14,9 @@ const expressSession = require("express-session"),
   connectFlash = require("connect-flash");
 //
 
+const fs = require('fs');
 const multer = require("multer");
-const upload = multer();
+// const upload = multer();
 const expressValidator = require("express-validator");  //npm i express-validator@5.3.0 OTHERWISE THERE MIGHT BE ERRORS
 const passport = require("passport");
 
@@ -65,8 +66,9 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 })); 
-app.use(upload.array());
+// app.use(upload.array());
 //
+
 
 app.use(expressValidator());
 app.set("view engine", "ejs");
@@ -93,9 +95,9 @@ app.post("/users/create", usersController.create, usersController.redirectView);
 app.get("/", profileController.login);
 app.post("/", profileController.authenticate, profileController.redirectView);
 
+app.get("/profile", profileController.indexView);
 app.get("/profile/logout", profileController.logout, profileController.redirectView);
 
-app.get("/profile", profileController.indexView);
 app.get("/signup", profileController.new);
 app.post("/signup", profileController.validate, profileController.create, profileController.redirectView);
 
@@ -107,7 +109,14 @@ app.delete("/profile/:id/delete", profileController.delete, profileController.re
 
 
 app.get("/feed", feedController.show, feedController.showView);
-app.use(express.static(path.join(__dirname, 'public')));
+
+
+var uploadImage = multer({dest: __dirname + '/public/images'});
+
+
+app.post('/upload', uploadImage.single("NAME"), feedController.upload);
+
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(errorController.logErrors);
 app.use(errorController.respondNoResourceFound);

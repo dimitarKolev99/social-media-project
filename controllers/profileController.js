@@ -33,30 +33,14 @@ module.exports = {
     res.render("signup");
   },
 
-  create: (req, res, next) => {
-   
-    let newUser = new User( getUserParams(req.body) );
-
-    User.register(newUser, req.body.password, (error, user) => {
-      if(user) {
-        req.flash("success", `${user.username}'s account created successfully!`);
-        res.locals.redirect = "/feed";
-        next();
-      } else { 
-        req.flash("error", `Failed to create user account because: ${error.message}.`)
-        res.locals.redirect = "/signup";
-        next();
-      }
-    })
-  },
-
+  
   redirectView: (req, res, next) => {
     console.log('Redirect View');
     let redirectPath = res.locals.redirect;
     if (redirectPath !== undefined) res.redirect(redirectPath);
     else next();
   },
-
+  
   show: (req, res, next) => {
     let userId = req.params.id;
     User.findById(userId)
@@ -72,18 +56,18 @@ module.exports = {
           console.log(`Error populating by ID:${error.message}`);
           next(error);
         });
-
+        
       })
       .catch(error => {
         console.log(`Error fetching user by ID:${error.message}`);
         next(error);
       });
-  },
+    },
 
   showView: (req, res) => {
     res.render("profile/index");
   },
-
+  
   edit: (req, res, next) => {
     const userId = req.params.id
     User.findById(userId)
@@ -115,7 +99,7 @@ module.exports = {
         next(error)
       })
   },
-
+  
   delete: (req, res, next) => {
     const userId = req.params.id
     User.findByIdAndRemove(userId)
@@ -170,6 +154,7 @@ module.exports = {
     next();
   },
   
+  //Creating New User
   validate: (req, res, next) => {
     req.sanitizeBody("email").normalizeEmail({
       all_lowercase: true
@@ -188,6 +173,23 @@ module.exports = {
         next();
       }
     });
+  },
+
+  create: (req, res, next) => {
+   
+    let newUser = new User( getUserParams(req.body) );
+
+    User.register(newUser, req.body.password, (error, user) => {
+      if(user) {
+        req.flash("success", `${user.username}'s account created successfully!`);
+        res.locals.redirect = "/feed";
+        next();
+      } else { 
+        req.flash("error", `Failed to create user account because: ${error.message}.`)
+        res.locals.redirect = "/signup";
+        next();
+      }
+    })
   },
 
 }
