@@ -1,6 +1,11 @@
 const User = require('../models/user');
 const Post = require('../models/post');
 
+const path = require('path');
+const fs = require('fs');
+
+var x = 0;
+
 exports.logRequestPaths = (req, res, next) => {
   console.log(`request made to: ${req.url}`);
   next();
@@ -34,11 +39,4 @@ module.exports = {
     res.render("feed.ejs");
   },
 
-  upload: (req, res) => {
-    if(req.file) {
-        res.send(`${req.file.path}`);
-        res.json(req.file);
-    }
-    else throw 'error';
-  }
 };

@@ -13,6 +13,9 @@
 </head>
 
 <body>
+    <img src="<%= user.imageUrl %>" alt="profile pic">
+    <a href="/feed">Feed</a>
+
     <div class="container bootstrap snippets bootdey">
       <div class="panel-body inf-content">
         <div class="row">
@@ -91,6 +94,12 @@
                 </tbody>
               </table>
 
+              <form method="post" enctype="multipart/form-data" 
+              action="/upload/<%= user._id %>">
+                <input type="file" accept="image/*" name="NAME">
+                <input type="submit" value="Upload Profile Pic!">
+              </form>
+
               <% if (user.posts !== undefined) { %>
                 <h4>Posts:</h4>
                 <div class="card-container">
@@ -98,10 +107,10 @@
 
                     <div class="card" style="margin-bottom: 1.2rem;">
                       <div class="flex-row">
-                        <img src="<%= user.imageUrl %>" width="40px" alt="mitko photo"
+                        <img src="<%= user.imageUrl %>" width="40px" alt="profile pic"
                           style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
                         <p class="name">
-                          <%= user.posts[i].authorName %>
+                          <%= user.username %>
                         </p>
                       </div>
                       <p>
@@ -117,7 +126,7 @@
                 <div class="control-group">
                     <div class="controls">
                       <a class="btn btn-secondary btn-lg active" role="button" href="<%=`/profile/${user._id}/edit`%>">
-                        Edit
+                        Edit User Information
                       </a>
                     </div>
                   </div>
@@ -126,7 +135,7 @@
                       <a class="btn btn-secondary btn-lg active" role="button"
                         href="<%=`/profile/${user._id}/delete?_method=DELETE`%>"
                         onclick="return confirm('Are you sure you want to delete this profile?')">
-                        Delete
+                        Delete Profile
                       </a>
                     </div>
                   </div>

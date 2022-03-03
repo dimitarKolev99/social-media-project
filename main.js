@@ -3,6 +3,7 @@ const errorController = require("./controllers/errorController");
 const feedController = require("./controllers/feedController");
 const profileController = require("./controllers/profileController");
 const usersController = require("./controllers/usersController");
+const imagesController = require('./controllers/imagesController');
 
 const user = require('./models/user');
 
@@ -111,10 +112,10 @@ app.delete("/profile/:id/delete", profileController.delete, profileController.re
 app.get("/feed", feedController.show, feedController.showView);
 
 
-var uploadImage = multer({dest: __dirname + '/public/images'});
+var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
-
-app.post('/upload', uploadImage.single("NAME"), feedController.upload);
+app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
+ profileController.redirectView);
 
 // app.use(express.static(path.join(__dirname, 'public')));
 
