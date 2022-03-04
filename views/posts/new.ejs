@@ -11,7 +11,7 @@
 <body>
     <!-- <script src="/js/newPost.js"></script> -->
 
-    <form onsubmit="return doForm()" enctype="multipart/form-data" action="/feed/create" method="post" id="formElem">
+    <form onsubmit="doForm()" enctype="multipart/form-data" action="/feed/create" method="post" id="formElem">
         <input type="text" name="content" id="content" placeholder="Content"><br>
         <input type="file" accept="image/*" name="NAME" id="imageFile">
         <button type="submit">Post!</button>

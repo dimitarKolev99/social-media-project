@@ -53,7 +53,7 @@ uploadProfilePic: (req, res, next) => {
 
   uploadPostPic: (req, res, next) => {
     if(req.file) {
-      console.log("req file");
+      console.log(req.file);
       const tempPath = req.file.path;
           const newFileName = `upload${getX()}${path.extname(req.file.originalname)}`;
           const targetPath = path.join(
@@ -62,6 +62,7 @@ uploadProfilePic: (req, res, next) => {
             fs.rename(tempPath, targetPath, err => {
               if (err) return console.log(`Error renaming file: ${err.message}`);
               // res.locals.redirect = `/feed`;
+              next();
               // next();
               /* let userId = req.params.id;
   

@@ -4,7 +4,9 @@ const feedController = require("./controllers/feedController");
 const profileController = require("./controllers/profileController");
 const usersController = require("./controllers/usersController");
 const imagesController = require('./controllers/imagesController');
-const postController = require('./controllers/postController')
+const postController = require('./controllers/postController');
+
+const Product = require('./models/product');
 
 const user = require('./models/user');
 
@@ -88,6 +90,11 @@ app.use(methodOverride("_method", {
 
 app.use(express.static('public'));
 
+app.get('/product', function(req, res, next) {
+  Product.find({}).then(function(products) {
+      res.send(products);
+  });
+});
 
 app.get("/users", usersController.index, usersController.indexView);
 app.get("/users/new", usersController.new);
@@ -113,8 +120,8 @@ var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
 app.get("/feed", feedController.show, feedController.showView);
 app.get("/feed/create", postController.indexView);
-app.post("/feed/create", postController.new, uploadImage.single("NAME"),
-imagesController.uploadPostPic, profileController.redirectView);
+
+app.post("/feed/create", postController.new, profileController.redirectView);
 
 
 
