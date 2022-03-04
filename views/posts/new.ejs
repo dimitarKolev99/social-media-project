@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Post</title>
+</head>
+
+<body>
+    <!-- <script src="/js/newPost.js"></script> -->
+
+    <form onsubmit="return doForm()" enctype="multipart/form-data" action="/feed/create" method="post" id="formElem">
+        <input type="text" name="content" id="content" placeholder="Content"><br>
+        <input type="file" accept="image/*" name="NAME" id="imageFile">
+        <button type="submit">Post!</button>
+    </form>
+
+    <!-- 
+            <input type="text" name="content" id="content" placeholder="Content"><br>
+            <input type="file" accept="image/*" name="NAME" id="imageFile">
+            <button id="btn">Post!</button> -->
+
+
+     <img src="" alt="" id="image">
+
+    <script>
+        /* document.getElementById('btn').addEventListener('click', function() {
+            doForm();
+        });
+
+
+        function doForm() {
+            var data = new FormData();
+            data.append('text', document.getElementById('content').value);
+            data.append('file', document.getElementById('imageFile').value);
+
+            var a = {
+                text: "",
+                file: "",
+            };
+
+            for (let [k, v] of data.entries()) {
+                if (k == 'text') {
+                    a.text = v;
+                }
+                if (k == 'file') {
+                    a.file = v;
+                }
+            }
+            post('/feed/create', a);
+        }
+
+        function post(path, params, method = 'post') {
+            // The rest of this code assumes you are not using a library.
+            // It can be made less verbose if you use one.
+            const form = document.createElement('form');
+            form.method = method;
+            form.action = path;
+            form.enctype = "multipart/form-data";
+
+                    if (params.text) {
+                        let hiddenField = document.createElement('input');
+                        hiddenField.type = 'hidden';
+                        hiddenField.name = 'text';
+                        hiddenField.value = params.text;
+                        form.appendChild(hiddenField);
+                    } else if (params.file) {
+                        let hiddennField = document.createElement('input');
+                        hiddennField.type = 'file';
+                        hiddennField.name = 'NAME';
+                        hiddennField.value = params.file;
+                        form.appendChild(hiddennField);
+                    }
+
+            
+
+            const form = document.createElement('form');
+            form.method = method;
+            form.action = path;
+            form.enctype = "multipart/form-data";
+
+            for (const key in params) {
+                if (params.hasOwnProperty(key)) {
+                    const hiddenField = document.createElement('input');
+                    hiddenField.type = 'hidden';
+                    hiddenField.name = key;
+                    hiddenField.value = params[key];
+
+                    form.appendChild(hiddenField);
+                }
+            }
+
+            document.body.appendChild(form);
+            form.submit(); 
+        }
+         */
+    </script>
+
+</body>
+
+</html>

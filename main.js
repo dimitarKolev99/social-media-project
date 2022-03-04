@@ -4,6 +4,7 @@ const feedController = require("./controllers/feedController");
 const profileController = require("./controllers/profileController");
 const usersController = require("./controllers/usersController");
 const imagesController = require('./controllers/imagesController');
+const postController = require('./controllers/postController')
 
 const user = require('./models/user');
 
@@ -108,11 +109,15 @@ app.put("/profile/:id/update", profileController.update, profileController.redir
 
 app.delete("/profile/:id/delete", profileController.delete, profileController.redirectView)
 
+var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
 app.get("/feed", feedController.show, feedController.showView);
+app.get("/feed/create", postController.indexView);
+app.post("/feed/create", postController.new, uploadImage.single("NAME"),
+imagesController.uploadPostPic, profileController.redirectView);
 
 
-var uploadImage = multer({dest: __dirname + '/public/uploads'});
+
 
 app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
  profileController.redirectView);
