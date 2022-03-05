@@ -14,8 +14,8 @@ module.exports = {
     },
 
     new: (req, res, next) => {
-        console.log(req.body);
-        // res.locals.data = '/feed';
+        console.log(`REQUEST BODY: ${req.body}`);
+        res.locals.redirect = '/feed';
         next();
     },
 
@@ -24,5 +24,5 @@ module.exports = {
         let redirectPath = res.locals.redirect;
         if (redirectPath !== undefined) res.redirect(redirectPath);
         else next();
-    },
+      },
 };

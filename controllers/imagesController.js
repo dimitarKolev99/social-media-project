@@ -53,7 +53,6 @@ uploadProfilePic: (req, res, next) => {
 
   uploadPostPic: (req, res, next) => {
     if(req.file) {
-      console.log(req.file);
       const tempPath = req.file.path;
           const newFileName = `upload${getX()}${path.extname(req.file.originalname)}`;
           const targetPath = path.join(
@@ -61,25 +60,16 @@ uploadProfilePic: (req, res, next) => {
       
             fs.rename(tempPath, targetPath, err => {
               if (err) return console.log(`Error renaming file: ${err.message}`);
-              // res.locals.redirect = `/feed`;
+              console.log(req.body);
+              console.log(targetPath);
+
+              res.locals.redirect = `/feed`;
+              let userVar;
+              User.findOne({_id : "621f160461661f3034a369d1"}).then(user => {
+                userVar = user;
+                console.log(userVar);
+              });
               next();
-              // next();
-              /* let userId = req.params.id;
-  
-              User.findByIdAndUpdate(userId, {
-                $set: { imageUrl: `../uploads/${newFileName}` }
-              })
-              .then(user => {
-                req.flash("success", 'Profile pic uploaded!');
-                res.locals.redirect = `/profile/${userId}`;
-                res.locals.user = user;
-                increment();
-                next();
-              })
-              .catch(error => {
-                console.log(`Error updating user by ID: ${error.message}`);
-                next(error);
-              }); */
             });
       }
       else throw 'error';

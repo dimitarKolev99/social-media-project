@@ -11,30 +11,51 @@
 <body>
     <!-- <script src="/js/newPost.js"></script> -->
 
-    <form onsubmit="doForm()" enctype="multipart/form-data" action="/feed/create" method="post" id="formElem">
-        <input type="text" name="content" id="content" placeholder="Content"><br>
+    <form id="postForm" enctype="multipart/form-data" action="/upload/" method="post">
         <input type="file" accept="image/*" name="NAME" id="imageFile">
+        <input type="text" name="content" id="content" placeholder="Content"><br>
         <button type="submit">Post!</button>
     </form>
 
-    <form action=""></form>
-            <input type="text" name="content" id="content" placeholder="Content"><br>
-            <input type="file" accept="image/*" name="NAME" id="imageFile">
-            <button id="btn">Post!</button>
 
 
-     <img src="" alt="" id="image">
+    <img src="" alt="" id="image">
 
     <script>
+        const form1 = document.getElementById('postForm');
+        const inputContent = document.getElementById('content').value;
 
-        function doForm() {
+        function postRequest() {
+            var a = {
+                content: "afafafa",
+            };
 
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '/feed/create', true);
+
+            //Send the proper header information along with the request
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            xhr.onreadystatechange = function () { // Call a function when the state changes.
+                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                    console.log("SUCCESS");
+                }
+            }
+            xhr.send(`${a.content}`);
+            // xhr.send(new Int8Array());
+            // xhr.send(document);
         }
-        /* document.getElementById('btn').addEventListener('click', function() {
-            doForm();
+
+        document.getElementById('btn').addEventListener('click', function () {
+            form1.submit();
+            postRequest();
+        });
+
+        form1.addEventListener('submit', function () {
         });
 
 
+        /*
         function doForm() {
             var data = new FormData();
             data.append('text', document.getElementById('content').value);

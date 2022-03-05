@@ -96,7 +96,7 @@ module.exports = {
       })
       .catch(error => {
         console.log(`Error updating user by ID: ${error.message}`)
-        next(error)
+        next(error);
       })
   },
   
@@ -133,7 +133,8 @@ module.exports = {
         if (user && user.password === req.body.password) {
           res.locals.redirect = '/feed';
           req.flash("success", `${user.username}'s logged in successfully!`);
-          res.locals.user = user;
+          req.user = user;
+          
           next();
         } else {
           req.flash("error", "Your account or password is incorrect. Please try again or contact your system administrator!");

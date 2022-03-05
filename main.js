@@ -60,10 +60,11 @@ passport.deserializeUser(user.deserializeUser());
 
 app.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
-  res.locals.loggedIn= req.isAuthenticated();
+  res.locals.loggedIn = req.isAuthenticated();
   res.locals.currentUser = req.user; 
   next();
 });
+
 
 //Handling data from POST-request
 app.use(express.json());
@@ -121,8 +122,9 @@ var uploadImage = multer({dest: __dirname + '/public/uploads'});
 app.get("/feed", feedController.show, feedController.showView);
 app.get("/feed/create", postController.indexView);
 
-app.post("/feed/create", postController.new, profileController.redirectView);
+app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic, postController.redirectView);
 
+app.post("/feed/create", postController.new, postController.redirectView);
 
 
 
