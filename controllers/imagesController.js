@@ -17,71 +17,81 @@ function getX() {
 
 module.exports = {
 
-uploadProfilePic: (req, res, next) => {
-  console.log(req.file);
-  if(req.file) {
-    console.log(req.file.path);
-    const tempPath = req.file.path;
-    // const newFileName = `upload${getX()}.jpg`;
-        const newFileName = `upload${path.extname(req.file.originalname)}`;
-        const targetPath = path.join(
-          path.dirname(req.file.originalname), 'public/uploads', newFileName);
-    
-          fs.rename(tempPath, targetPath, err => {
-            if (err) return console.log(`Error renaming file: ${err.message}`);
+  uploadProfilePic: (req, res, next) => {
+    console.log(req.file);
+    if (req.file) {
+      console.log(req.file.path);
+      const tempPath = req.file.path;
+      // const newFileName = `upload${getX()}.jpg`;
+      const newFileName = `upload${path.extname(req.file.originalname)}`;
+      const targetPath = path.join(
+        path.dirname(req.file.originalname), 'public/uploads', newFileName);
 
-            let userId = req.params.id;
+      fs.rename(tempPath, targetPath, err => {
+        if (err) return console.log(`Error renaming file: ${err.message}`);
 
-            User.findByIdAndUpdate(userId, {
-              $set: { imageUrl: `../uploads/${newFileName}` }
-            })
-            .then(user => {
-              req.flash("success", 'Profile pic uploaded!');
-              res.locals.redirect = `/profile/${userId}`;
-              res.locals.user = user;
-              increment();
-              next();
-            })
-            .catch(error => {
-              console.log(`Error updating user by ID: ${error.message}`);
-              next(error);
-            });
+        let userId = req.params.id;
+
+        User.findByIdAndUpdate(userId, {
+          $set: { imageUrl: `../uploads/${newFileName}` }
+        })
+          .then(user => {
+            req.flash("success", 'Profile pic uploaded!');
+            res.locals.redirect = `/profile/${userId}`;
+            res.locals.user = user;
+            increment();
+            next();
+          })
+          .catch(error => {
+            console.log(`Error updating user by ID: ${error.message}`);
+            next(error);
           });
+      });
     }
     else throw 'error';
   },
 
   uploadPostPic: (req, res, next) => {
-    if(req.file) {
+    if (req.file) {
       const tempPath = req.file.path;
-          const newFileName = `upload${getX()}${path.extname(req.file.originalname)}`;
-          const targetPath = path.join(
-            path.dirname(req.file.originalname), 'public/uploads', newFileName);
-      
-            fs.rename(tempPath, targetPath, err => {
-              if (err) return console.log(`Error renaming file: ${err.message}`);
-              console.log(req.body);
-              console.log(targetPath);
+      const newFileName = `upload${getX()}${path.extname(req.file.originalname)}`;
+      const targetPath = path.join(
+        path.dirname(req.file.originalname), 'public/uploads', newFileName);
 
-              res.locals.redirect = `/feed`;
-              let userVar;
-              Post.insertMany({
-                authorId: "621f160461661f3034a369d1",
-                content : req.body.content,
-                imageUrl: `../uploads/${newFileName}` 
+      fs.rename(tempPath, targetPath, err => {
+        if (err) return console.log(`Error renaming file: ${err.message}`);
+        console.log(req.body);
+        console.log(targetPath);
+
+        res.locals.redirect = `/feed`;
+        Post.insertMany({
+          authorId: req.user._id,
+          content: req.body.content,
+          imageUrl: `../uploads/${newFileName}`
+        })
+          .then(post => {
+            User.findOne({ _id: req.user._id })
+              .then(user => {
+                user.posts.push(post);
+                next();
               })
-              .then(post => console.log(post))
               .catch(error => {
-                req.flash("error", `Failed to create post: ${error.message}`)
+                req.logout();
+                req.flash("error", "Creating post failed");
+                res.locals.redirect = "/error";
+                next();
+                console.log(`Error updating user: ${error.message}`);
               });
-              User.findOne({_id : "621f160461661f3034a369d1"}).then(user => {
-                userVar = user;
-                // console.log(userVar);
-              });
-              next();
-            });
-      }
-      else throw 'error';
-    },
+          })
+          .catch(error => {
+            console.log(`Error inserting post: ${error.message}`);
+            res.locals.redirect = `/feed/create`;
+          });
+
+        next();
+      });
+    }
+    else throw 'error';
+  },
 
 };

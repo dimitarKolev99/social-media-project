@@ -97,14 +97,14 @@ app.get('/product', function(req, res, next) {
       res.send(products);
   });
 });
-
-app.get("/users", usersController.index, usersController.indexView);
-app.get("/users/new", usersController.new);
-app.post("/users/create", usersController.create, usersController.redirectView);
-
-// app.get("/", homeController.respondWebsite);
 app.get("/", profileController.login);
 app.post("/", profileController.authenticate);
+
+/* app.get("/users", usersController.index, usersController.indexView);
+app.get("/users/new", usersController.new);
+app.post("/users/create", usersController.create, usersController.redirectView);
+ */
+// app.get("/", homeController.respondWebsite);
 
 app.get("/profile", profileController.indexView);
 app.get("/profile/logout", profileController.logout, profileController.redirectView);
@@ -121,9 +121,10 @@ app.delete("/profile/:id/delete", profileController.delete, profileController.re
 var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
 app.get("/feed", feedController.show, feedController.showView);
+app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic, postController.redirectView);
 app.get("/feed/create", postController.indexView);
 
-app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic, postController.redirectView);
+app.get('/error', errorController.respondInternalError);
 
 app.post("/feed/create", postController.new, postController.redirectView);
 
