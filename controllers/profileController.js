@@ -104,15 +104,15 @@ module.exports = {
   delete: (req, res, next) => {
     const userId = req.params.id
     User.findByIdAndRemove(userId)
-      .then(() => {
+      .then((user) => {
         req.flash("success", `${user.username}'s account deleted successfully!`);
-        res.locals.redirect = "/"
-        next()
+        // res.locals.redirect = "/"
+        next();
       })
       .catch(error => {
         console.log(`Error deleting user by ID: ${error.message}`)
         req.flash("error", `Failed to delete user account because: ${error.message}`)
-        next()
+        next(error);
       })
   },
 

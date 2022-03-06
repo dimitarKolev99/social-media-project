@@ -78,7 +78,7 @@ module.exports = {
                 next();
                 console.log(`Error updating user: ${error.message}`);
               }               
-                req.flash("success", "Your post has been create!");
+                req.flash("success", "Your post has been created!");
                 res.locals.redirect = '/feed';
                 next();
               

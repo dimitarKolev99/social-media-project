@@ -2,42 +2,77 @@ const User = require('../models/user');
 const Post = require('../models/post');
 
 const getUserParams = body => {
-    return {
-      content: body.text,
-      fileUrl: body.file,
-    }
+  return {
+    content: body.text,
+    fileUrl: body.file,
   }
+}
 
 module.exports = {
-    indexView: (req, res) => {
-        res.render('posts/new');
-    },
+  indexView: (req, res) => {
+    res.render('posts/new');
+  },
 
-    new: (req, res, next) => {
-        console.log(`REQUEST BODY: ${req.body}`);
-        res.locals.redirect = '/feed';
+  new: (req, res, next) => {
+    console.log(`REQUEST BODY: ${req.body}`);
+    res.locals.redirect = '/feed';
+    next();
+  },
+
+  redirectView: (req, res, next) => {
+    console.log('Redirect View');
+    let redirectPath = res.locals.redirect;
+    if (redirectPath !== undefined) res.redirect(redirectPath);
+    else next();
+  },
+
+  update: (req, res, next) => {
+    const userId = req.params.id
+    const userParams = getUserParams(req.body)
+    User.findByIdAndUpdate(userId, {
+      $set: userParams
+    })
+      .then(user => {
+        req.flash("success", `${user.username}'s account changes successfully!`)
+        res.locals.redirect = `/profile/${userId}`
+        res.locals.user = user;
         next();
-    },
+      })
+      .catch(error => {
+        req.flash("error", `Failed to change ${user.username}'s account!`);
+        console.log(`Error updating user by ID: ${error.message}`)
+        next(error);
+      })
+  },
 
-    redirectView: (req, res, next) => {
-        console.log('Redirect View');
-        let redirectPath = res.locals.redirect;
-        if (redirectPath !== undefined) res.redirect(redirectPath);
-        else next();
-      },
+  delete: (req, res, next) => {
+    const postId = req.params.id;
+    Post.findByIdAndRemove(postId)
+      .then(() => {
+        req.flash("success", `Post deleted successfully!`);
+        res.locals.redirect = `/profile/${req.user._id}`;
+        next();
+      })
+      .catch(error => {
+        console.log(`Error deleting post by ID: ${error.message}`);
+        req.flash("error", `Failed to delete post because: ${error.message}`);
+        next();
+      });
+  },
 
-      delete: (req, res, next) => {
-        const postId = req.params.id;
-        Post.findByIdAndRemove(postId)
-          .then(() => {
-            req.flash("success", `Post deleted successfully!`);
-            res.locals.redirect = `/profile/${req.user._id}`;
-            next();
-          })
-          .catch(error => {
-            console.log(`Error deleting post by ID: ${error.message}`);
-            req.flash("error", `Failed to delete post because: ${error.message}`);
-            next();
-          });
-      },
+  deleteAllFromUser: (req, res, next) => {
+    const userId = req.params.id;
+    Post.deleteMany({ authorId : userId})
+      .then(() => {
+        req.flash("success", `Posts deleted successfully!`);
+        // res.locals.redirect = `/profile/${req.user._id}`;
+        res.locals.redirect = '/';
+        next();
+      })
+      .catch(error => {
+        console.log(`Error deleting all post by authorID: ${error.message}`);
+        req.flash("error", `Failed to delete post because: ${error.message}`);
+        next();
+      });
+  },
 };

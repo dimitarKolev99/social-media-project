@@ -116,7 +116,8 @@ app.get("/profile/:id/edit", profileController.edit)
 app.get("/profile/:id", profileController.show, profileController.showView);
 app.put("/profile/:id/update", profileController.update, profileController.redirectView)
 
-app.delete("/profile/:id/delete", profileController.delete, profileController.redirectView)
+app.delete("/profile/:id/delete", profileController.delete, postController.deleteAllFromUser,
+ profileController.redirectView)
 
 var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
@@ -124,7 +125,7 @@ app.get("/feed", feedController.show, feedController.showView);
 app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic, postController.redirectView);
 app.get("/feed/create", postController.indexView);
 
-app.delete("/feed/:id/delete", postController.delete, postController.redirectView);
+app.delete("/feed/:id/delete", postController.delete,postController.redirectView);
 
 app.get('/error', errorController.index);
 
