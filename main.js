@@ -124,7 +124,7 @@ app.get("/feed", feedController.show, feedController.showView);
 app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic, postController.redirectView);
 app.get("/feed/create", postController.indexView);
 
-app.get('/error', errorController.respondInternalError);
+app.get('/error', errorController.index);
 
 app.post("/feed/create", postController.new, postController.redirectView);
 

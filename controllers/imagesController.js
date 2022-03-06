@@ -63,32 +63,33 @@ module.exports = {
         console.log(req.body);
         console.log(targetPath);
 
-        res.locals.redirect = `/feed`;
-        Post.insertMany({
+        Post.create({
           authorId: req.user._id,
           content: req.body.content,
           imageUrl: `../uploads/${newFileName}`
         })
           .then(post => {
-            User.findOne({ _id: req.user._id })
-              .then(user => {
-                user.posts.push(post);
-                next();
-              })
-              .catch(error => {
+            User.findByIdAndUpdate({ _id: req.user._id }, { $push: { posts : post._id } }, {new:true},
+              function (error, success) {
+              if (error) {
                 req.logout();
                 req.flash("error", "Creating post failed");
                 res.locals.redirect = "/error";
                 next();
                 console.log(`Error updating user: ${error.message}`);
-              });
+              }               
+                req.flash("success", "Your post has been create!");
+                res.locals.redirect = '/feed';
+                next();
+              
+            });
           })
           .catch(error => {
             console.log(`Error inserting post: ${error.message}`);
             res.locals.redirect = `/feed/create`;
+            next();
           });
 
-        next();
       });
     }
     else throw 'error';
