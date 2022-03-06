@@ -121,14 +121,14 @@ module.exports = {
   },
 
 
-  /* authenticate: passport.authenticate("local", {
+  authenticate: passport.authenticate("local", {
     failureRedirect: "/error",
     faliureFlash: "Failed to login.",
     successRedirect: "/feed",
     successFlash: "Logged in!"
-  }), */
+  }),
 
-  authenticate: (req, res, next) => {
+  /* authenticate: (req, res, next) => {
     User.findOne( { email : req.body.email } )
       .then((user) => {
         if (user) {
@@ -154,7 +154,7 @@ module.exports = {
         console.log(`Error: ${error.message}`);
         next(error);
       });
-  },
+  }, */
 
   logout: (req, res, next) => {
     req.logout();
@@ -185,7 +185,7 @@ module.exports = {
   },
 
   create: (req, res, next) => {
-   
+    if (req.skip) {next();}
     let newUser = new User( getUserParams(req.body) );
 
     User.register(newUser, req.body.password, (error, user) => {

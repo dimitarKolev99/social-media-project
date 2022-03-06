@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const passportLocalMongoose = require("passport-local-mongoose");
 const Post = require('./post.js');
 
@@ -14,10 +14,6 @@ const UserSchema = mongoose.Schema({
         lowercase: true,
         unique: true
     },
-    password: {
-        type: String,
-        required: true
-    },
     imageUrl: {
         type: String
     },
@@ -29,7 +25,7 @@ const UserSchema = mongoose.Schema({
     }
 );
 
-UserSchema.pre("save", function(next) {
+/* UserSchema.pre("save", function(next) {
     let user = this;
 
     bcrypt.hash(user.password, 10).then(hash =>{
@@ -45,7 +41,7 @@ UserSchema.pre("save", function(next) {
 UserSchema.methods.passwordComparison = function(inputPassword) {
     let user = this;
     return bcrypt.compare(inputPassword, user.password);
-};
+}; */
 
 UserSchema.plugin(passportLocalMongoose, {
     usernameField: "email"

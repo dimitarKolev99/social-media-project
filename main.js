@@ -8,7 +8,7 @@ const postController = require('./controllers/postController');
 
 const Product = require('./models/product');
 
-const user = require('./models/user');
+const User = require('./models/user');
 
 const methodOverride = require('method-override')
 
@@ -22,7 +22,6 @@ const fs = require('fs');
 const multer = require("multer");
 // const upload = multer();
 const expressValidator = require("express-validator");  //npm i express-validator@5.3.0 OTHERWISE THERE MIGHT BE ERRORS
-const passport = require("passport");
 
 require('dotenv').config();
 // dbUrl = process.env.dbUrl ||"mongodb://localhost:27017/socialMedia_db" ;
@@ -51,12 +50,13 @@ app.use(expressSession({
 }));
 app.use(connectFlash());
 
+const passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(user.createStrategy());
-passport.serializeUser(user.serializeUser());
-passport.deserializeUser(user.deserializeUser());
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //Middleware to associate connectFlash to to flashes on response
 app.use((req, res, next) => {
@@ -67,7 +67,7 @@ app.use((req, res, next) => {
 });
 //
 
-//Handling data from POST-request
+//Parsing data from POST-request
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
@@ -104,7 +104,7 @@ app.post("/users/create", usersController.create, usersController.redirectView);
 
 // app.get("/", homeController.respondWebsite);
 app.get("/", profileController.login);
-app.post("/", profileController.authenticate, profileController.redirectView);
+app.post("/", profileController.authenticate);
 
 app.get("/profile", profileController.indexView);
 app.get("/profile/logout", profileController.logout, profileController.redirectView);

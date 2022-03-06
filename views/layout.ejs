@@ -1,8 +1,8 @@
 
 <body>
   <% if (loggedIn) { %>
-
-    <a href="<%=`/profile/${currentUser._id}`%>">asdad</a>
+      Loggen in as <a href="<%=`/profile/${currentUser._id}`%>"><%= currentUser.username %></a>
+ 
     <div id="nav">
             <nav class="navbar navbar-expand-lg navbar navbar-dark bg-primary">
               <a class="navbar-brand" href="/">Social Media Website </a>
@@ -62,8 +62,3 @@
     </footer>
   </div> -->
 </body>
-
-<!-- <%# Bootstrap style sheet %>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="/js/bootstrap.js"></script>  -->
