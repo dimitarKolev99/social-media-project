@@ -58,13 +58,14 @@ passport.use(user.createStrategy());
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
+//Middleware to associate connectFlash to to flashes on response
 app.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
   res.locals.loggedIn = req.isAuthenticated();
   res.locals.currentUser = req.user; 
   next();
 });
-
+//
 
 //Handling data from POST-request
 app.use(express.json());

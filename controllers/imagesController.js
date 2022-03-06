@@ -65,9 +65,18 @@ uploadProfilePic: (req, res, next) => {
 
               res.locals.redirect = `/feed`;
               let userVar;
+              Post.insertMany({
+                authorId: "621f160461661f3034a369d1",
+                content : req.body.content,
+                imageUrl: `../uploads/${newFileName}` 
+              })
+              .then(post => console.log(post))
+              .catch(error => {
+                req.flash("error", `Failed to create post: ${error.message}`)
+              });
               User.findOne({_id : "621f160461661f3034a369d1"}).then(user => {
                 userVar = user;
-                console.log(userVar);
+                // console.log(userVar);
               });
               next();
             });

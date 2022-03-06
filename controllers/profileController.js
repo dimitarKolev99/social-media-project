@@ -95,6 +95,7 @@ module.exports = {
         next();
       })
       .catch(error => {
+        req.flash("error", `Failed to change ${user.username}'s account!`);
         console.log(`Error updating user by ID: ${error.message}`)
         next(error);
       })
@@ -110,7 +111,7 @@ module.exports = {
       })
       .catch(error => {
         console.log(`Error deleting user by ID: ${error.message}`)
-       req.flash("error", `Failed to delete user account because: ${error.message}`)
+        req.flash("error", `Failed to delete user account because: ${error.message}`)
         next()
       })
   },
@@ -130,15 +131,22 @@ module.exports = {
   authenticate: (req, res, next) => {
     User.findOne( { email : req.body.email } )
       .then((user) => {
-        if (user && user.password === req.body.password) {
-          res.locals.redirect = '/feed';
-          req.flash("success", `${user.username}'s logged in successfully!`);
-          req.user = user;
-          
-          next();
+        if (user) {
+          user.passwordComparison(req.body.password)
+          .then(passwordMatch =>{
+            if (passwordMatch) {
+              res.locals.redirect = '/feed';
+              req.flash("success", `${user.username}'s logged in successfully!`);
+              req.user = user;
+            } else {
+              req.flash("error", "Your account or password is incorrect. Please try again or contact your system administrator!");
+              res.locals.redirect = '/';
+            }
+            next();
+          });       
         } else {
-          req.flash("error", "Your account or password is incorrect. Please try again or contact your system administrator!");
-          res.locals.redirect = '/';
+          req.flash("error", "Failed to log in user account: Useraccount not found.");
+          res.locals.redirect = "/users/login";
           next();
         }
       })
