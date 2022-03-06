@@ -115,6 +115,7 @@
                         <p class="name">
                           <%= user.username %>
                         </p>
+                        <a href="/feed/<%= user.posts[i]._id %>/delete?_method=DELETE">delete</a>
                       </div>
                       <p>
                         <%= user.posts[i].content %>

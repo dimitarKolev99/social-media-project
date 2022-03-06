@@ -25,4 +25,19 @@ module.exports = {
         if (redirectPath !== undefined) res.redirect(redirectPath);
         else next();
       },
+
+      delete: (req, res, next) => {
+        const postId = req.params.id;
+        Post.findByIdAndRemove(postId)
+          .then(() => {
+            req.flash("success", `Post deleted successfully!`);
+            res.locals.redirect = `/profile/${req.user._id}`;
+            next();
+          })
+          .catch(error => {
+            console.log(`Error deleting post by ID: ${error.message}`);
+            req.flash("error", `Failed to delete post because: ${error.message}`);
+            next();
+          });
+      },
 };
