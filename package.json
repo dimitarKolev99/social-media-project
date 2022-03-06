@@ -63,5 +63,8 @@
     ],
     "testEnvironment": "node",
     "preset": "@shelf/jest-mongodb"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
