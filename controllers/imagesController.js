@@ -3,7 +3,6 @@ const Post = require('../models/post');
 
 const path = require('path');
 const fs = require('fs');
-const { get } = require('superagent');
 
 var x = 0;
 
