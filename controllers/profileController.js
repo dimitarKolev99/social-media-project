@@ -2,6 +2,8 @@ httpStatus = require('http-status-codes')
 const passport = require('passport');
 const User = require("../models/user");
 const Post = require("../models/post");
+const fs = require('fs');
+const path = require('path');
 
 const getUserParams = body => {
   return {
@@ -189,6 +191,16 @@ module.exports = {
 
     User.register(newUser, req.body.password, (error, user) => {
       if(user) {
+        let folderName = `./public/uploads/${user._id}`;
+        try {
+          if (!fs.existsSync(folderName)) {
+            fs.mkdirSync(folderName);
+          }
+        } catch (err) {
+          req.flash("error", `Failed to create user account because: ${err.message}.`)
+          res.locals.redirect = "/signup";
+          next();  
+        } 
         req.flash("success", `${user.username}'s account created successfully!`);
         res.locals.redirect = "/";
         next();

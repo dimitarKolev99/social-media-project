@@ -17,12 +17,21 @@ function getX() {
 module.exports = {
 
   uploadProfilePic: (req, res, next) => {
-    console.log(req.file);
     if (req.file) {
-      console.log(req.file.path);
       const tempPath = req.file.path;
-      // const newFileName = `upload${getX()}.jpg`;
       const newFileName = `upload${path.extname(req.file.originalname)}`;
+
+      let userID = req.user._id;
+      console.log(req.user._id);
+      try {
+        if (fs.existsSync(userID)) {
+          console.log('IT EXISTS');
+        }
+      } catch (err) {
+        console.log(err);
+      }
+      // const userPath = 
+
       const targetPath = path.join(
         path.dirname(req.file.originalname), 'public/uploads', newFileName);
 
