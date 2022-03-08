@@ -3,6 +3,7 @@ const Post = require('../models/post');
 
 const path = require('path');
 const fs = require('fs');
+const user = require('../models/user');
 
 var x = 0;
 
@@ -19,42 +20,36 @@ module.exports = {
   uploadProfilePic: (req, res, next) => {
     if (req.file) {
       const tempPath = req.file.path;
-      const newFileName = `upload${path.extname(req.file.originalname)}`;
+      const newFileName = `profile_pic${path.extname(req.file.originalname)}`;
 
-      let userID = req.user._id;
-      console.log(req.user._id);
+      let userID = req.params.id;      
       try {
-        if (fs.existsSync(userID)) {
-          console.log('IT EXISTS');
+        if (fs.existsSync(`./public/uploads/${userID}`)) {
+
+          const targetPath = path.join(
+            path.dirname(req.file.originalname), `public/uploads/${userID}`, newFileName);
+    
+          fs.rename(tempPath, targetPath, err => {
+            if (err) return console.log(`Error renaming file: ${err.message}`);
+        
+            User.findByIdAndUpdate(userID, {
+              $set: { imageUrl: `../uploads/${userID}/${newFileName}` }
+            })
+              .then(user => {
+                req.flash("success", 'Profile pic uploaded!');
+                res.locals.redirect = `/profile/${userID}`;
+                res.locals.user = user;
+                next();
+              })
+              .catch(error => {
+                console.log(`Error updating user by ID: ${error.message}`);
+                next(error);
+              });
+          });
         }
       } catch (err) {
         console.log(err);
       }
-      // const userPath = 
-
-      const targetPath = path.join(
-        path.dirname(req.file.originalname), 'public/uploads', newFileName);
-
-      fs.rename(tempPath, targetPath, err => {
-        if (err) return console.log(`Error renaming file: ${err.message}`);
-
-        let userId = req.params.id;
-
-        User.findByIdAndUpdate(userId, {
-          $set: { imageUrl: `../uploads/${newFileName}` }
-        })
-          .then(user => {
-            req.flash("success", 'Profile pic uploaded!');
-            res.locals.redirect = `/profile/${userId}`;
-            res.locals.user = user;
-            increment();
-            next();
-          })
-          .catch(error => {
-            console.log(`Error updating user by ID: ${error.message}`);
-            next(error);
-          });
-      });
     }
     else throw 'error';
   },

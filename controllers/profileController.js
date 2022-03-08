@@ -5,6 +5,8 @@ const Post = require("../models/post");
 const fs = require('fs');
 const path = require('path');
 
+const removeDir = require('../public/js/removeFolder.js');
+
 const getUserParams = body => {
   return {
     username: body.username,
@@ -106,9 +108,17 @@ module.exports = {
     const userId = req.params.id
     User.findByIdAndRemove(userId)
       .then((user) => {
-        req.flash("success", `${user.username}'s account deleted successfully!`);
-        // res.locals.redirect = "/"
-        next();
+        
+        try {
+          if (fs.existsSync(`./public/uploads/${userId}`)) {
+            removeDir.removeDir(`./public/uploads/${userId}`);
+            req.flash("success", `${user.username}'s account deleted successfully!`);
+            next();
+          }
+        } catch (err) {
+          console.log(`ERROR deleting folder and files: ${err.message}`);
+        }
+
       })
       .catch(error => {
         console.log(`Error deleting user by ID: ${error.message}`)
@@ -192,18 +202,33 @@ module.exports = {
     User.register(newUser, req.body.password, (error, user) => {
       if(user) {
         let folderName = `./public/uploads/${user._id}`;
+
         try {
           if (!fs.existsSync(folderName)) {
+
             fs.mkdirSync(folderName);
+
+            User.findByIdAndUpdate(user._id, {
+              $set: { imageUrl: `../images/fb_default.jpg` }
+            })
+            .then(user => {
+              req.flash("success", `${user.username}'s account created successfully!`);
+              res.locals.redirect = "/";
+              next();
+            })
+            .catch(error => {
+              console.log(`Error registering: ${error.message}`);
+              res.locals.redirect = "/signup";
+              next();
+            });
+
           }
         } catch (err) {
           req.flash("error", `Failed to create user account because: ${err.message}.`)
           res.locals.redirect = "/signup";
           next();  
         } 
-        req.flash("success", `${user.username}'s account created successfully!`);
-        res.locals.redirect = "/";
-        next();
+        
       } else { 
         req.flash("error", `Failed to create user account because: ${error.message}.`)
         res.locals.redirect = "/signup";

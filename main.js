@@ -122,7 +122,8 @@ app.delete("/profile/:id/delete", profileController.delete, postController.delet
 var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
 app.get("/feed", feedController.show, feedController.showView);
-app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic, postController.redirectView);
+app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
+ postController.redirectView);
 app.get("/feed/create", postController.indexView);
 
 app.delete("/feed/:id/delete", postController.delete,postController.redirectView);
