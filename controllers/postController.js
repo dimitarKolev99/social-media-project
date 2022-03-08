@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const Post = require('../models/post');
+const remove = require('../public/js/removeFolder.js');
+const fs = require('fs');
 
 const getUserParams = body => {
   return {
@@ -48,10 +50,18 @@ module.exports = {
   delete: (req, res, next) => {
     const postId = req.params.id;
     Post.findByIdAndRemove(postId)
-      .then(() => {
-        req.flash("success", `Post deleted successfully!`);
-        res.locals.redirect = `/profile/${req.user._id}`;
-        next();
+      .then((post) => {
+
+        let imageID = post.imageUrl.substring(11, post.imageUrl.length);
+
+         fs.unlink(`./public/uploads/${imageID}`, (err) => {
+          if (err) throw err;
+          req.flash("success", `Post deleted successfully!`);
+          res.locals.redirect = `/profile/${req.user._id}`;
+          next();
+          console.log('successfully deleted /tmp/hello');
+        });
+
       })
       .catch(error => {
         console.log(`Error deleting post by ID: ${error.message}`);
