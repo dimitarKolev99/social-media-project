@@ -87,10 +87,12 @@ app.set("port", port);
 app.use(layouts);
 
 app.use(methodOverride("_method", {
- methods: ["POST", "GET"]
+  methods: ["POST", "GET"]
 }));
 
 app.use(express.static('public'));
+
+var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
 app.get('/product', function(req, res, next) {
   Product.find({}).then(function(products) {
@@ -109,24 +111,33 @@ app.post("/users/create", usersController.create, usersController.redirectView);
 app.get("/profile", profileController.indexView);
 app.get("/profile/logout", profileController.logout, profileController.redirectView);
 
+//Sign up routes
 app.get("/signup", profileController.new);
-app.post("/signup", profileController.validate, profileController.create, profileController.redirectView);
+app.post("/signup", profileController.validate, profileController.create,
+ profileController.redirectView);
+//
 
-app.get("/profile/:id/edit", profileController.edit)
 app.get("/profile/:id", profileController.show, profileController.showView);
-app.put("/profile/:id/update", profileController.update, profileController.redirectView)
+app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
+profileController.redirectView);
+
+app.get("/profile/:id/edit", profileController.edit);
+
+app.put("/profile/:id/update", profileController.update, profileController.redirectView);
 
 app.delete("/profile/:id/delete", profileController.delete, postController.deleteAllFromUser,
- profileController.redirectView)
+profileController.redirectView);
 
-var uploadImage = multer({dest: __dirname + '/public/uploads'});
-
+//Feed routes
 app.get("/feed", feedController.show, feedController.showView);
-app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
- postController.redirectView);
 app.get("/feed/create", postController.indexView);
 
+app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
+postController.redirectView);
+ 
 app.delete("/feed/:id/delete", postController.delete,postController.redirectView);
+//
+
 
 app.get('/error', errorController.index);
 
@@ -134,8 +145,6 @@ app.post("/feed/create", postController.new, postController.redirectView);
 
 
 
-app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
- profileController.redirectView);
 
 // app.use(express.static(path.join(__dirname, 'public')));
 
