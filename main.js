@@ -33,11 +33,15 @@ const express = require("express"),
 const mongoose = require("mongoose");
 
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => console.log('connected to db'))
-  .catch((err) => console.log(err));
-
-
+if (process.env.NODE_ENV === 'test') {
+  mongoose.connect("mongodb://localhost:27017/test_db", {
+    useNewUrlParser : true
+  });
+} else {
+  mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => console.log('connected to db'))
+    .catch((err) => console.log(err));
+}
 
 app.use(cookieParser("secret_passcode"));
 app.use(expressSession({
@@ -62,7 +66,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
   res.locals.flashMessages = req.flash();
   res.locals.loggedIn = req.isAuthenticated();
-  res.locals.currentUser = req.user; 
+  res.locals.currentUser = req.user;
   next();
 });
 //
@@ -71,7 +75,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({
   extended: true
-})); 
+}));
 // app.use(upload.array());
 //
 
@@ -83,7 +87,13 @@ var port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
 }
-app.set("port", port);
+
+if (process.env.NODE_ENV === 'test') {
+  app.set("port", 3001);
+} else {
+  app.set("port", port);
+}
+
 app.use(layouts);
 
 app.use(methodOverride("_method", {
@@ -102,21 +112,13 @@ app.get('/product', function(req, res, next) {
 app.get("/", profileController.login);
 app.post("/", profileController.authenticate);
 
-/* app.get("/users", usersController.index, usersController.indexView);
-app.get("/users/new", usersController.new);
-app.post("/users/create", usersController.create, usersController.redirectView);
- */
-// app.get("/", homeController.respondWebsite);
-
-app.get("/profile", profileController.indexView);
-app.get("/profile/logout", profileController.logout, profileController.redirectView);
-
 //Sign up routes
 app.get("/signup", profileController.new);
 app.post("/signup", profileController.validate, profileController.create,
- profileController.redirectView);
+profileController.redirectView);
 //
 
+//Profile routes
 app.get("/profile/:id", profileController.show, profileController.showView);
 app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
 profileController.redirectView);
@@ -128,13 +130,21 @@ app.put("/profile/:id/update", profileController.update, profileController.redir
 app.delete("/profile/:id/delete", profileController.delete, postController.deleteAllFromUser,
 profileController.redirectView);
 
+app.get("/profile/logout", profileController.logout, profileController.redirectView);
+//
+
+
+
+
 //Feed routes
 app.get("/feed", feedController.show, feedController.showView);
 app.get("/feed/create", postController.indexView);
 
 app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
 postController.redirectView);
- 
+
+app.put('upload/');
+
 app.delete("/feed/:id/delete", postController.delete,postController.redirectView);
 //
 
@@ -155,3 +165,5 @@ app.use(errorController.respondInternalError);
 app.listen(port, () => {
   console.log(`Server running on port: http://localhost:${app.get("port")}`);
 });
+
+module.exports = app;

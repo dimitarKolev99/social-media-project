@@ -11,18 +11,17 @@
 </head>
 
 <body>
+    <% if (loggedIn) { %>
+        <a href="/feed/create">Create New Post</a>
+        <a href="/profile/logout">Log Out</a>
 
-    <a href="/feed/create">Create New Post</a>
-    <a href="/profile/logout">Log Out</a>
-    
-    <h1><%= loggedIn %></h1>
-        <% if (posts !== undefined) { %>
+        <% if (posts !==undefined) { %>
             <div class="card-container">
                 <% for (var i=0; i < posts.length; i++) { %>
                     <div class="card" style="margin-bottom: 1.2rem;">
                         <div class="flex-row">
-                            <img src="<%= posts[i].authorId.imageUrl %>" width="40px" alt="mitko photo"    
-                            style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
+                            <img src="<%= posts[i].authorId.imageUrl %>" width="40px" alt="mitko photo"
+                                style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
                             <a class="name" href="/profile/<%= posts[i].authorId._id %>">
                                 <%= posts[i].authorId.username %>
                             </a>
@@ -35,8 +34,13 @@
 
                     <% } %>
             </div>
-            <% } %>
+        <% } %>
 
+    <%} else {%>
+
+        <h3>Please login to view this content.</h3>
+
+        <% } %>
 </body>
 
 </html>
