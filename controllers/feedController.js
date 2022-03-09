@@ -34,9 +34,4 @@ module.exports = {
     res.render("feed");
   },
 
-  respondWebsite: (req, res) => {
-    console.log('rendering feed');
-    res.render("feed.ejs");
-  },
-
 };

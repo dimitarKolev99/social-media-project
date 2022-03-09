@@ -1,8 +1,6 @@
-const homeController = require("./controllers/homeController");
 const errorController = require("./controllers/errorController");
 const feedController = require("./controllers/feedController");
 const profileController = require("./controllers/profileController");
-const usersController = require("./controllers/usersController");
 const imagesController = require('./controllers/imagesController');
 const postController = require('./controllers/postController');
 
@@ -24,7 +22,6 @@ const multer = require("multer");
 const expressValidator = require("express-validator");  //npm i express-validator@5.3.0 OTHERWISE THERE MIGHT BE ERRORS
 
 require('dotenv').config();
-// dbUrl = process.env.dbUrl ||"mongodb://localhost:27017/socialMedia_db" ;
 const express = require("express"),
   path = require("path"),
   app = express(),
@@ -76,7 +73,6 @@ app.use(express.json());
 app.use(express.urlencoded({
   extended: true
 }));
-// app.use(upload.array());
 //
 
 
@@ -109,6 +105,7 @@ app.get('/product', function(req, res, next) {
       res.send(products);
   });
 });
+
 app.get("/", profileController.login);
 app.post("/", profileController.authenticate);
 
@@ -133,9 +130,6 @@ profileController.redirectView);
 app.get("/profile/logout", profileController.logout, profileController.redirectView);
 //
 
-
-
-
 //Feed routes
 app.get("/feed", feedController.show, feedController.showView);
 app.get("/feed/create", postController.indexView);
@@ -143,20 +137,10 @@ app.get("/feed/create", postController.indexView);
 app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
 postController.redirectView);
 
-app.put('upload/');
-
-app.delete("/feed/:id/delete", postController.delete,postController.redirectView);
+app.delete("/feed/:id/delete", postController.delete, postController.redirectView);
 //
 
-
 app.get('/error', errorController.index);
-
-app.post("/feed/create", postController.new, postController.redirectView);
-
-
-
-
-// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(errorController.logErrors);
 app.use(errorController.respondNoResourceFound);

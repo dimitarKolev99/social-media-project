@@ -15,19 +15,6 @@ module.exports = {
     res.render('posts/new');
   },
 
-  new: (req, res, next) => {
-    console.log(`REQUEST BODY: ${req.body}`);
-    res.locals.redirect = '/feed';
-    next();
-  },
-
-  redirectView: (req, res, next) => {
-    console.log('Redirect View');
-    let redirectPath = res.locals.redirect;
-    if (redirectPath !== undefined) res.redirect(redirectPath);
-    else next();
-  },
-
   update: (req, res, next) => {
     const userId = req.params.id
     const userParams = getUserParams(req.body)
@@ -85,4 +72,12 @@ module.exports = {
         next();
       });
   },
+
+  redirectView: (req, res, next) => {
+    console.log('Redirect View');
+    let redirectPath = res.locals.redirect;
+    if (redirectPath !== undefined) res.redirect(redirectPath);
+    else next();
+  },
+  
 };
