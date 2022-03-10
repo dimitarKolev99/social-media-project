@@ -19,6 +19,7 @@ body {
     background-clip: border-box;
     border-radius: 0.5rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
 }
 
 .btn {
@@ -65,3 +66,4 @@ body {
 #password {
     margin-bottom: 1rem;    
 }
+

@@ -17,8 +17,13 @@ module.exports = {
     }
   },
 
-  login: (req, res) => {
-    res.render('index');
+  login: (req, res, next) => {
+    if (req.isAuthenticated()) {
+      res.locals.redirect = '/feed';
+      next(); 
+    } else {
+      res.render('index');
+    }
   },
 
   authenticate: passport.authenticate("local", {

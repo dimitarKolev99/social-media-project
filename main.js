@@ -106,7 +106,7 @@ app.get('/product', function(req, res, next) {
   });
 });
 
-app.get("/", profileController.login);
+app.get("/", profileController.login, profileController.redirectView);
 app.post("/", profileController.authenticate);
 
 //Sign up routes
@@ -116,6 +116,7 @@ profileController.redirectView);
 //
 
 //Profile routes
+app.get("/profile/logout", profileController.logout, profileController.redirectView);
 app.get("/profile/:id", profileController.show, profileController.showView);
 app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
 profileController.redirectView);
@@ -127,7 +128,6 @@ app.put("/profile/:id/update", profileController.update, profileController.redir
 app.delete("/profile/:id/delete", profileController.delete, postController.deleteAllFromUser,
 profileController.redirectView);
 
-app.get("/profile/logout", profileController.logout, profileController.redirectView);
 //
 
 //Feed routes
