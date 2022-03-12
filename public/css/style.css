@@ -65,3 +65,8 @@ body {
 #password {
     margin-bottom: 1rem;    
 }
+
+.plus_icon {
+    background-image: url('../images/plus.png');
+    width: 40px;
+}

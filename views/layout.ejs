@@ -1,9 +1,24 @@
 <link rel="shortcut icon" type="image/jpg" href="../images/favicon-16x16.png">
+<link rel="stylesheet" href="../css/style.css">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <body>
   <% if (loggedIn) { %>
+
+
+    <div class="header">
+      <div class="header__right">
+        <div class="header__info">
+          <img src="<%= currentUser.imageUrl %>" alt="profile picture">
+          <a href="<%=`/profile/${currentUser._id}`%>">
+            <%= currentUser.username %>
+          </a>
+        </div>
+        <span class="plus_icon"></span>
+      </div>
+    </div>
+
     Loggen in as <a href="<%=`/profile/${currentUser._id}`%>">
       <%= currentUser.username %>
     </a>
