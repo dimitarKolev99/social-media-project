@@ -5,7 +5,78 @@ body {
     background: #f0f2f5;
 
     margin: 0;
+    overflow-x: hidden;
 }
+
+.flex {
+    display: flex;
+    gap: var(--gap, 1rem);
+}
+
+.logo {
+    margin: 2rem;
+}
+
+.mobile-nav-toggle {
+    display: none;
+}
+
+/* primary header */
+.primary-header {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.primary-navigation {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.primary-navigation a {
+    text-decoration: none;
+    background: hsl(0, 0%, 100%);
+}
+
+.primary-navigation a > [aria-hidden="true"] {
+    font-weight: 700;
+    margin-inline-end: 0.75em;
+}
+
+@media (max-width: 35em) {
+    .primary-navigation {
+        --gap: 2em;
+
+        position: fixed;
+        inset: 0 0 0 30%;
+        background: hsl(0, 0%, 100%);
+
+        flex-direction: column;
+        padding: min(30vh, 10rem) 2em;
+
+        transform: translateX(100%);
+        transition: 350ms ease-out;
+    }
+
+    .primary-navigation[data-visible='true'] {
+        transform: translate(0%);
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+        position: absolute;
+        background: url('../images/ham.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        border: 0;
+        z-index: 9999;
+        width: 2rem;
+        aspect-ratio: 1;
+        top: 2rem;
+        right: 2rem;
+    }
+}
+/* priamry header end */
 
 .container {
     height: 100vh;
@@ -19,6 +90,7 @@ body {
     background-clip: border-box;
     border-radius: 0.5rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+
 }
 
 .btn {
@@ -67,6 +139,15 @@ body {
 }
 
 .plus_icon {
-    background-image: url('../images/plus.png');
-    width: 40px;
+    background: url('../images/plus.png') no-repeat;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+    padding-bottom: 1rem;
+    display: block;
+}
+
+.header {
+    margin: 1rem;
+    padding: 1rem;    
 }

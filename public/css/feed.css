@@ -3,6 +3,13 @@
     margin: 0 auto;
 }
 
+@media (max-width: 35em) {
+    .card-container {
+        width: 100%;
+        margin: 0 auto;    
+    }    
+}
+
 .flex-row {
     display: flex;
     flex-direction: row;
@@ -15,4 +22,6 @@
     margin-top: 1.65rem;
     margin-left: 7px;
 }
+
+
 

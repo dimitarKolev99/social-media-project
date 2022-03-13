@@ -8,12 +8,20 @@
     <title>Social Media | Feed</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/feed.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
 </head>
 
 <body>
     <% if (loggedIn) { %>
-        <a href="/feed/create">Create New Post</a>
-        <a href="/profile/logout">Log Out</a>
+
+        <div class="header">
+            <a id="favicon" href="/">Index</a>
+            <a class="btn" href="/feed/create">Create New Post</a>
+            <a href="/profile/logout">Log Out</a>
+
+        </div>
 
         <% if (posts !==undefined) { %>
             <div class="card-container">
@@ -39,8 +47,9 @@
     <%} else {%>
 
         <h3>Please login to view this content.</h3>
+        <a href="/">Index</a>
 
-        <% } %>
+    <% } %>
 </body>
 
 </html>

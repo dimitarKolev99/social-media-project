@@ -1,29 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Social Media | Log In or Sign Up</title>
     <link rel="stylesheet" href="./css/style.css">
-</head>
-
+    
 <body>
     <div class="container flex-column">
         <div class="card flex-column" style="padding-bottom: 1em; padding-left: 1em; padding-right: 1em;">
-            <h3>Welcome To My Social Media Website!</h1>
+            <h3>Welcome To My Social Media Website!</h3>
 
             <form action="/" method="post" id="form">
                 <div class="flex-column">
-                    <input type="email" class="input" name="email" id="email" size="25" placeholder="Email"
+                    <input type="email" class="input" name="email" id="email" size="35" placeholder="Email"
                     required>
     
                     <input type="password" class="input" id="password" name="password"
-                    minlength="3" size="25" placeholder="Password" required>
+                    minlength="4" size="35" placeholder="Password" required>
                     
-                    <input class="btn" type="submit" value="Submit" 
-                    style="width: 30ch; text-align: center;"> 
-                    <!-- <a type="submit" class="btn" id="login" style="width: 24ch; text-align: center;">Log In</a>  -->
+<!--                     <input class="btn" type="submit" value="Submit" 
+                    style="width: 39ch; text-align: center;">
+ -->
+                    <a class="btn" onclick="document.getElementById('form').submit();"
+                    style="background-color: #1877f2; margin-top: 0;
+                    width: 27.6ch; text-align: center;">Log In</a>
+
                 </div>
             </form>  
 
