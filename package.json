@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "node main.js",
-    "lint:ejs": "ejslint views/profile/index1.ejs",
+    "lint:ejs": "ejslint views/profile/index.ejs",
     "cypress": "cypress open",
     "jest": "jest",
     "coverage": "jest --coverage",

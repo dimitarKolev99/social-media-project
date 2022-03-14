@@ -8,28 +8,33 @@
     <title>Social Media | Feed</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/feed.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
 
 </head>
 
 <body>
     <% if (loggedIn) { %>
 
-        <div class="header">
+        <!-- <div class="header">
             <a id="favicon" href="/">Index</a>
-            <a class="btn" href="/feed/create">Create New Post</a>
             <a href="/profile/logout">Log Out</a>
+            
+        </div> -->
 
-        </div>
-
+        <!-- <div class="card-container">
+            <div class="card">
+                <a class="btn" href="/feed/create">Create A New Post</a>
+            </div>
+        </div> -->
+        
         <% if (posts !==undefined) { %>
             <div class="card-container">
                 <% for (var i=0; i < posts.length; i++) { %>
                     <div class="card" style="margin-bottom: 1.2rem;">
                         <div class="flex-row">
-                            <img src="<%= posts[i].authorId.imageUrl %>" width="40px" alt="mitko photo"
-                                style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 20px">
+                            <img src="<%= posts[i].authorId.imageUrl %>" 
+                            alt="user profile picture"
+                                style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 50px;
+                                object-fit: cover; width: 2.7rem; aspect-ratio: 1;">
                             <a class="name" href="/profile/<%= posts[i].authorId._id %>">
                                 <%= posts[i].authorId.username %>
                             </a>

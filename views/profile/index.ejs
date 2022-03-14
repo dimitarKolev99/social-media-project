@@ -9,29 +9,17 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/feed.css">
   <link href="../css/profile.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="../css/style.css">
 </head>
 
 <body>
-    <img src="<%= user.imageUrl %>" alt="profile pic" width="300px">
+    
+
     <a href="/feed">Feed</a>
-    <a href="/profile/logout">Log Out</a>
-
-
 
     <div class="container bootstrap snippets bootdey">
       <div class="panel-body inf-content">
         <div class="row">
-          <div class="col-md-4">
-            <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip" src=""
-              data-original-title="Usuario">
-            <ul title="Ratings" class="list-inline ratings text-center">
-              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-              <li><a href="#"><span class="glyphicon glyphicon-star"></span></a></li>
-            </ul>
-          </div>
           <div class="col-md-6">
             <strong>Information</strong><br>
             <div class="table-responsive">
@@ -39,15 +27,22 @@
                 <tbody>
                   <tr>
                     <td>
-                      <strong>
-                        <span class="glyphicon glyphicon-asterisk text-primary"></span>
-                        ID-Number
-                      </strong>
+                          <img src="<%= user.imageUrl %>" alt="profile pic" width="200px">
                     </td>
-                    <td class="text-primary">
-                      <%= user._id %>
-                    </td>
+
+                    <% if (String(user._id) == String(currentUser._id)) { %>
+                     
+                    <div class="card input">
+                      <form method="post" enctype="multipart/form-data" 
+                      action="/upload/<%= user._id %>">
+                        <input type="file" accept="image/*" name="NAME">
+                        <input type="submit" value="Upload Profile Pic!">
+                      </form>
+                    </div>
+                    <% } %>
+                 
                   </tr>
+                  
 
                   <tr>
                     <td>
@@ -96,11 +91,7 @@
                 </tbody>
               </table>
 
-              <form method="post" enctype="multipart/form-data" 
-              action="/upload/<%= user._id %>">
-                <input type="file" accept="image/*" name="NAME">
-                <input type="submit" value="Upload Profile Pic!">
-              </form>
+              
 
               <% if (user.posts !== undefined) { %>
                 <h4>Posts:</h4>
@@ -114,7 +105,11 @@
                         <p class="name">
                           <%= user.username %>
                         </p>
-                        <a href="/feed/<%= user.posts[i]._id %>/delete?_method=DELETE">delete</a>
+                        <% if (String(user._id) == String(currentUser._id)) { %>
+                  
+                          <a href="/feed/<%= user.posts[i]._id %>/delete?_method=DELETE">delete</a>
+                  
+                        <% } %>
                       </div>
                       <p>
                         <%= user.posts[i].content %>
@@ -126,7 +121,8 @@
                 </div>
                 <% } %>
 
-                <div class="control-group">
+                <% if (String(user._id) == String(currentUser._id)) { %>
+                  <div class="control-group">
                     <div class="controls">
                       <a class="btn btn-secondary btn-lg active" role="button" href="<%=`/profile/${user._id}/edit`%>">
                         Edit User Information
@@ -142,6 +138,8 @@
                       </a>
                     </div>
                   </div>
+
+                  <% } %>
             </div>
           </div>
         </div>

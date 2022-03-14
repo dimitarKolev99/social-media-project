@@ -15,36 +15,35 @@
 
     <header class="primary-header flex logo">
       <div>
-        <img src="../images/plus.png" alt="plus" style="width: 40px;">
+        <h2>Social Media</h2>
       </div>
       
-      <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false"><span class="sr-only"></span></button>
-
+      <button title="Menu" class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false"><span class="sr-only"></span></button>
+      <!-- <div id="search">
+        <img style="width: 2rem; aspect-ratio: 1;" src="../images/plus.png" alt="">
+        <input type="text">
+      </div> -->
       <nav>
         <ul id="primary-navigation" class="primary-navigation flex" data-visible="false">
-          <li class="active">
-            <a href="/">
-              <span aria-hidden="true">00</span>Social Media
+
+          <li>
+            <a title="Profile" href="<%=`/profile/${currentUser._id}`%>">
+              <img src="<%= currentUser.imageUrl %>" alt="profile picture">
+            </a>
+          </li>
+
+          <li>
+            <a title="Add a new post" href="/feed/create">
+              <img id="add" src="../images/plus.png" alt="add new post">
+            </a>
+          </li>
+
+          <li>
+            <a title="Logout" href="/profile/logout">
+              <img id="logout" src="../images/logout.svg" alt="Logout">
             </a>
           </li>
     
-          <li>
-            <a href="/feed">
-              <span aria-hidden="true">01</span>Feed
-            </a>
-          </li>
-    
-          <li>
-            <a href="<%=`/profile/${currentUser._id}`%>">
-              <span aria-hidden="true">02</span>Profile
-            </a>
-          </li>
-    
-          <li>
-            <a href="#">
-              <span aria-hidden="true">03</span>#
-            </a>
-          </li>
         </ul>
       </nav>
     
