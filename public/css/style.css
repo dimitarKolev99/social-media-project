@@ -14,6 +14,20 @@ body {
     gap: var(--gap, 1rem);
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /* .logo {
     margin: 2rem;
 }
@@ -147,6 +161,7 @@ body {
     border-radius: 0.5rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 
+    margin-bottom: 1.2rem;
 }
 
 .btn {
@@ -160,12 +175,7 @@ body {
     border-radius: 5px;
 }
 
-.flex-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+
 
 .input {
     background: #FFFFFF;

@@ -8,6 +8,7 @@
     <title>Social Media | Feed</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/feed.css">
+    <script src="../js/script.js" defer></script>
 
 </head>
 
@@ -20,20 +21,39 @@
             
         </div> -->
 
-        <!-- <div class="card-container">
-            <div class="card">
-                <a class="btn" href="/feed/create">Create A New Post</a>
-            </div>
-        </div> -->
         
-        <% if (posts !==undefined) { %>
-            <div class="card-container">
+        <div class="card-container">
+            
+            <div class="card">
+                <div class="flex-column">
+                    <div class="flex-row">
+                        <a href="/profile/<%= currentUser._id %>">
+                            <img src="<%= currentUser.imageUrl %>" alt="profile picture"
+                            style="border-radius: 50px; margin-right: 1rem;
+                            object-fit: cover; width: 2.7rem; aspect-ratio: 1;">
+                        </a>
+                        <div class="search">
+                            <form id="postForm" enctype="multipart/form-data" action="/upload/" method="post">
+                                <input type="text" name="content" id="content" placeholder="Content"><br>
+                        </div>
+                    </div>
+                    <div>
+                        <input style="display: none;" type="file" accept="image/*" name="NAME" id="imageFile">
+                        <a onclick="do2()" id="pic_upl_btn">
+                            <img id="pic_upl" src="../images/pic_icon.svg" alt="picture icon">
+                        </a>
+                        <a class="btn" id="btn">Post</a>
+                    </form>
+                    </div>
+                </div>
+            </div>
+            <% if (posts !==undefined) { %>
                 <% for (var i=0; i < posts.length; i++) { %>
-                    <div class="card" style="margin-bottom: 1.2rem;">
+                    <div class="card">
                         <div class="flex-row">
                             <img src="<%= posts[i].authorId.imageUrl %>" 
                             alt="user profile picture"
-                                style="margin: 1rem 0.3rem 1rem 1.2rem; border-radius: 50px;
+                                style="border-radius: 50px;
                                 object-fit: cover; width: 2.7rem; aspect-ratio: 1;">
                             <a class="name" href="/profile/<%= posts[i].authorId._id %>">
                                 <%= posts[i].authorId.username %>
@@ -45,9 +65,9 @@
                         <img src="<%= posts[i].imageUrl %>" width="100%" alt="post photo">
                     </div>
 
-                    <% } %>
-            </div>
-        <% } %>
+                <% } %>
+            <% } %>
+        </div>
 
     <%} else {%>
 
