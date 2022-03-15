@@ -29,6 +29,15 @@
  */
 
 
+ #pic_upl {
+     width: 2rem;
+     aspect-ratio: 1;
+ }
+
  #pic_upl_btn:hover {
     cursor: pointer;
+ }
+
+ #content {
+     width: 40ch;
  }

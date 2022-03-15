@@ -19,13 +19,17 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+
+    gap: var(--gap, 1rem);
 }
 
 .flex-column {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+
+    gap: var(--gap, 1rem);
 }
 
 /* .logo {
@@ -180,9 +184,10 @@ body {
 .input {
     background: #FFFFFF;
     border: 1px solid #dddfe2;
-    color: #1d2129;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    color: #000000;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: medium;
     height: 22px;
     line-height: 16px;
     padding: 0.5rem 0.5rem 0.5rem 0.2rem;
@@ -192,7 +197,12 @@ body {
 
 .input:focus {
     outline: none;
-    border: 1px solid #1877f2;    
+    border: 1px solid #1877f2;
+    
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    font-size: medium;
+    color: #000000;
 }
 
 #email {
