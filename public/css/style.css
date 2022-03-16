@@ -32,6 +32,14 @@ body {
     gap: var(--gap, 1rem);
 }
 
+.flex-column-index {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
 /* .logo {
     margin: 2rem;
 }
