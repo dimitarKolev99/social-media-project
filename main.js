@@ -109,6 +109,14 @@ app.get('/product', function(req, res, next) {
 app.get("/", profileController.login, profileController.redirectView);
 app.post("/", profileController.authenticate);
 
+
+//AJAX
+app.post('/make', (req, res) => {
+  res.end('HI');
+  // res.send(req.body);
+});
+//
+
 //Sign up routes
 app.get("/signup", profileController.new);
 app.post("/signup", profileController.validate, profileController.create,
