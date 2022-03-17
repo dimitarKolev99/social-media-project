@@ -28,9 +28,7 @@
                 <div class="flex-column">
                     <div class="flex-row">
                         <a href="/profile/<%= currentUser._id %>">
-                            <img class="opacity" src="<%= currentUser.imageUrl %>" alt="profile picture"
-                            style="border-radius: 50px; 
-                            object-fit: cover; width: 2.7rem; aspect-ratio: 1;">
+                            <img class="avatar" src="<%= currentUser.imageUrl %>" alt="profile picture">
                         </a>
                         <div class="search">
                             <form id="postForm" enctype="multipart/form-data" action="/upload/" method="post">
@@ -77,10 +75,8 @@
                     <div class="card">
                         <div class="flex-row" id="card-header">
                             <a href="/profile/<%= posts[i].authorId._id %>">
-                            <img class="opacity" src="<%= posts[i].authorId.imageUrl %>" 
-                            alt="user profile picture"
-                                style="border-radius: 50px;
-                                object-fit: cover; width: 2.7rem; aspect-ratio: 1;">                                
+                            <img class="avatar" src="<%= posts[i].authorId.imageUrl %>" 
+                            alt="user profile picture">                                
                             </a>
                             <a class="name" href="/profile/<%= posts[i].authorId._id %>">
                                 <%= posts[i].authorId.username %>
