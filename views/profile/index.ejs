@@ -16,85 +16,20 @@
     
 
     <a href="/feed">Feed</a>
+    <img src="<%= user.imageUrl %>" alt="profile pic" width="200px">
 
-    <div class="container bootstrap snippets bootdey">
-      <div class="panel-body inf-content">
-        <div class="row">
-          <div class="col-md-6">
-            <strong>Information</strong><br>
-            <div class="table-responsive">
-              <table class="table table-user-information">
-                <tbody>
-                  <tr>
-                    <td>
-                          <img src="<%= user.imageUrl %>" alt="profile pic" width="200px">
-                    </td>
-
-                    <% if (String(user._id) == String(currentUser._id)) { %>
+    <% if (String(user._id) == String(currentUser._id)) { %>
                      
-                    <div class="card input">
-                      <form method="post" enctype="multipart/form-data" 
-                      action="/upload/<%= user._id %>">
-                        <input type="file" accept="image/*" name="NAME">
-                        <input type="submit" value="Upload Profile Pic!">
-                      </form>
-                    </div>
-                    <% } %>
-                 
-                  </tr>
-                  
-
-                  <tr>
-                    <td>
-                      <strong>
-                        <span class="glyphicon glyphicon-bookmark text-primary"></span>
-                        Username
-                      </strong>
-                    </td>
-                    <td class="text-primary">
-                      <%= user.username %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>
-                        <span class="glyphicon glyphicon-envelope text-primary"></span>
-                        Email
-                      </strong>
-                    </td>
-                    <td class="text-primary">
-                      <%= user.email %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>
-                        <span class="glyphicon glyphicon-calendar text-primary"></span>
-                        created
-                      </strong>
-                    </td>
-                    <td class="text-primary">
-                      <%= user.createdAt %>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <strong>
-                        <span class="glyphicon glyphicon-calendar text-primary"></span>
-                        Modified
-                      </strong>
-                    </td>
-                    <td class="text-primary">
-                      <%= user.updatedAt %>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-              
+      <div class="card input">
+        <form method="post" enctype="multipart/form-data" 
+        action="/upload/<%= user._id %>">
+          <input type="file" accept="image/*" name="NAME">
+          <input type="submit" value="Upload Profile Pic!">
+        </form>
+      </div>
+      <% } %>
 
               <% if (user.posts !== undefined) { %>
-                <h4>Posts:</h4>
                 <div class="card-container">
                   <% for (var i = 0; i < user.posts.length; i++) { %>
 

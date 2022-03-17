@@ -235,3 +235,37 @@ body {
     margin: 1rem;
     padding: 1rem;    
 }
+
+.anchor {
+    text-decoration: none;
+}
+
+.anchor > h2 {
+    margin: 0;
+    padding: 0.5rem;
+}
+
+.anchor:link {
+    color: inherit;
+  }
+  
+  /* visited link */
+.anchor:visited {
+    color: inherit;
+}
+  
+  /* mouse over link */
+.anchor > h2:hover {
+    background-color: #f0f2f5;
+    /* border: 1px solid #dddfe2; */
+    border-radius: 20px;
+
+    color: inherit;
+}
+  
+  /* selected link */
+  .anchor:active {
+    color: inherit;
+  }
+
+
