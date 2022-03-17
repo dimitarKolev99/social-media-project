@@ -5,26 +5,26 @@
 
 <script src="./js/formHandler.js"></script>
 
-<div class="container flex-column">
-  <div class="card flex-column signUpCard">
+<div class="container flex-column-index">
+  <div class="card flex-column-index signUpCard">
 
     <form id="form" action='/signup' method="post">
 
-      <div class="flex-column">
+      <div class="flex-column-index">
 
         <input type="text" id="username" name="username" placeholder="Username"
          class="input" title="Username can contain any letters or numbers, without spaces"
-         size="35" style="margin-bottom: 1rem; " required>
+         style="margin-bottom: 1rem; " required>
 
         <input id="" type="text" id="email" name="email" placeholder="Email"
-         class="input" size="35" required style=" margin-bottom: 1rem;
+         class="input" required style=" margin-bottom: 1rem;
          ">
         <input type="password" id="password" name="password" placeholder="Password"
-         class="input" title="Password should be at least 4 characters" size="35" style="
+         class="input" title="Password should be at least 4 characters"  style="
          margin-bottom: 1rem;" required>
 
-        <a class="btn" onclick="document.getElementById('form').submit();"
-          style="background: #42b72a; margin-top: 0; ">Register!</a>
+        <a class="btn signup" onclick="document.getElementById('form').submit();"
+          >Register!</a>
 
       </div>
     

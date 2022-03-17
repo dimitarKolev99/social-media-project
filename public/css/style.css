@@ -1,7 +1,6 @@
 body {
-    /* font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
-    Helvetica, Arial, "Lucida Grande", sans-serif; */
-    font-family: 'Quicksand', sans-serif;
+    font-family: 'Quicksand', "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
+    Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     background: #f0f2f5;
 
@@ -178,13 +177,29 @@ body {
 
 .btn {
     cursor: pointer;
-    display: inline-block;
+    display: block;
     text-decoration: none;
     color: white;
     background-color: #1877f2;
-    padding: 0.5em 1.25em;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     font-weight: bold;
     border-radius: 5px;
+    width: 100%;
+
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: #1100ff;
+}
+
+.signup {
+    background-color: #42b72a;;
+}
+
+.signup:hover {
+    background-color: #116406;
 }
 
 
@@ -194,22 +209,26 @@ body {
     border: 1px solid #dddfe2;
     color: #000000;
     font-family: 'Quicksand', sans-serif;
-    font-weight: bold;
-    font-size: medium;
-    height: 22px;
+    font-size: 17px;
     line-height: 16px;
-    padding: 0.5rem 0.5rem 0.5rem 0.2rem;
+    /* height: 22px; */
+    padding: 14px 16px;
     vertical-align: middle;
     border-radius: 5px;
+    width: 330px;
+    margin: 0;
+    word-wrap: break-word;
 }
 
 .input:focus {
     outline: none;
     border: 1px solid #1877f2;
+
+    border-color: #1877f2;
+    box-shadow: 0 0 0 2px #e7f3ff;
+    caret-color: #1877f2;
     
     font-family: 'Quicksand', sans-serif;
-    font-weight: bold;
-    font-size: medium;
     color: #000000;
 }
 
