@@ -20,7 +20,7 @@
 }
 
 .name:hover {
-    background-color: #f0f2f5;
+    text-decoration: underline;
 }
 
 /* .search {
@@ -41,3 +41,12 @@
  #content {
      width: 40ch;
  }
+
+ #card-header {
+    padding-left: 1.4rem; padding-top: 1rem;
+ }
+
+ .opacity:hover {
+     opacity: 0.9;
+ }
+

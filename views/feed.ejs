@@ -28,7 +28,7 @@
                 <div class="flex-column">
                     <div class="flex-row">
                         <a href="/profile/<%= currentUser._id %>">
-                            <img src="<%= currentUser.imageUrl %>" alt="profile picture"
+                            <img class="opacity" src="<%= currentUser.imageUrl %>" alt="profile picture"
                             style="border-radius: 50px; 
                             object-fit: cover; width: 2.7rem; aspect-ratio: 1;">
                         </a>
@@ -75,16 +75,19 @@
             <% if (posts !==undefined) { %>
                 <% for (var i=0; i < posts.length; i++) { %>
                     <div class="card">
-                        <div class="flex-row">
-                            <img src="<%= posts[i].authorId.imageUrl %>" 
+                        <div class="flex-row" id="card-header">
+                            <a href="/profile/<%= posts[i].authorId._id %>">
+                            <img class="opacity" src="<%= posts[i].authorId.imageUrl %>" 
                             alt="user profile picture"
                                 style="border-radius: 50px;
-                                object-fit: cover; width: 2.7rem; aspect-ratio: 1;">
+                                object-fit: cover; width: 2.7rem; aspect-ratio: 1;">                                
+                            </a>
                             <a class="name" href="/profile/<%= posts[i].authorId._id %>">
                                 <%= posts[i].authorId.username %>
                             </a>
                         </div>
-                        <p>
+
+                        <p style="margin-left: 1.4rem;">
                             <%= posts[i].content %>
                         </p>
                         <img style="border-top: 1px solid rgba(0, 0, 0, 0.116);
