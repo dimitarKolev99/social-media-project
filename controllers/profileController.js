@@ -9,14 +9,6 @@ const removeDir = require('../public/js/removeFolder.js');
 
 module.exports = {
 
-  getUserParams: (body) => {
-     return {
-      username: body.username,
-      email: body.email,
-      password: body.password
-    }
-  },
-
   login: (req, res, next) => {
     if (req.isAuthenticated()) {
       res.locals.redirect = '/feed';
