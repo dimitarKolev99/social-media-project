@@ -9,14 +9,6 @@ const removeDir = require('../public/js/removeFolder.js');
 
 module.exports = {
 
-  getUserParams: (body) => {
-    return {
-      username: body.username,
-      email: body.email,
-      password: body.password
-    }
-  },
-
   login: (req, res, next) => {
     if (req.isAuthenticated()) {
       res.locals.redirect = '/feed';
@@ -71,7 +63,11 @@ module.exports = {
 
   create: (req, res, next) => {
     if (req.skip) {next();}
-    let newUser = new User( getUserParams(req.body) );
+    let newUser = new User( {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password
+    } );
 
     User.register(newUser, req.body.password, (error, user) => {
       if(user) {
@@ -153,9 +149,10 @@ module.exports = {
 
   update: (req, res, next) => {
     const userId = req.params.id
-    const userParams = getUserParams(req.body)
     User.findByIdAndUpdate(userId, {
-        $set: userParams
+        $set: {username: req.body.username,
+          email: req.body.email,
+          password: req.body.password}
       })
       .then(user => {
         req.flash("success", `${user.username}'s account changes successfully!`)
