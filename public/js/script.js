@@ -1,21 +1,21 @@
 
 
 document.getElementById('btn').addEventListener('click', function() {
-    let form = document.getElementById('postForm');
-    let content = document.getElementById('content');
+     let form = document.getElementById('postForm');
+/*     let content = document.getElementById('content');
     let img = document.getElementById('imageFile');
 
     let formData = new FormData(); 
     formData.append(content.name, content.value);
     formData.append(img.name, img.value);
-
+ */ 
     /*     let object = {
         content: content,
         img: img,
     };
  */    // console.log(`Content: ${content} Image: ${img}`);
-    doRequest(formData);
-    // form.submit();
+    // doRequest(formData);
+    form.submit();
 });
 
 function doRequest(o) {
