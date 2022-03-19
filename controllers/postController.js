@@ -62,7 +62,6 @@ module.exports = {
     Post.deleteMany({ authorId : userId})
       .then(() => {
         req.flash("success", `Posts deleted successfully!`);
-        // res.locals.redirect = `/profile/${req.user._id}`;
         res.locals.redirect = '/';
         next();
       })

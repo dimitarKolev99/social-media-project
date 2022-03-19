@@ -18,7 +18,6 @@ const expressSession = require("express-session"),
 
 const fs = require('fs');
 const multer = require("multer");
-// const upload = multer();
 const expressValidator = require("express-validator");  //npm i express-validator@5.3.0 OTHERWISE THERE MIGHT BE ERRORS
 
 require('dotenv').config();
@@ -109,13 +108,6 @@ app.get('/product', function(req, res, next) {
 app.get("/", profileController.login, profileController.redirectView);
 app.post("/", profileController.authenticate);
 
-
-//AJAX
-app.post('/make', (req, res) => {
-  res.end('HI');
-  // res.send(req.body);
-});
-//
 
 //Sign up routes
 app.get("/signup", profileController.new);
