@@ -13,11 +13,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
-          mongodb-version: '5.0'
       - name: Install dependencies
-        uses: supercharge/mongodb-github-action@1.7.0
-        with:
-          mongodb-version: '5.0'
-
       - run: npm ci
       - run: npm run test

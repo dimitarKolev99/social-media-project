@@ -29,7 +29,17 @@ const express = require("express"),
 const mongoose = require("mongoose");
 
 
-if (process.env.NODE_ENV === 'test') {
+/* if (process.env.NODE_ENV === 'test') {
+  mongoose.connect("mongodb://localhost:27017/test_db", {
+    useNewUrlParser : true
+  });
+} else {
+  mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => console.log('connected to db'))
+    .catch((err) => console.log(err));
+} */
+
+if (process.env.MONGO_URI === 'undefined') {
   mongoose.connect("mongodb://localhost:27017/test_db", {
     useNewUrlParser : true
   });
