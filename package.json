@@ -7,6 +7,7 @@
     "start": "node main.js",
     "lint:ejs": "ejslint views/profile/index.ejs",
     "cypress": "cypress open",
+    "cy:run": "cypress run --spec './cypress/integration/sample.spec.js'",
     "jest": "jest",
     "coverage": "jest --coverage",
     "run dev": "nodemon main.js",
