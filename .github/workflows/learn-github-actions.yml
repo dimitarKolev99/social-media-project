@@ -15,5 +15,4 @@ jobs:
           node-version: '16'
       - name: Install dependencies
         run: npm ci
-      - run: npm start & wait-on http://localhost:3000
-      - run: npm run cy:run
+      - run: npm run test

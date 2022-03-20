@@ -13,7 +13,7 @@
     "run dev": "nodemon main.js",
     "mongo": "docker-compose up -d",
     "mongobash": "docker-compose exec mongo bash",
-    "test": "mocha",
+    "test": "start-server-and-test start http://localhost:3000 cy:run",
     "test:watch": "jest --watch"
   },
   "repository": {
@@ -55,6 +55,7 @@
     "cypress": "^7.7.0",
     "jest": "^26.6.3",
     "nodemon": "^2.0.15",
+    "start-server-and-test": "^1.14.0",
     "superagent": "^6.1.0",
     "supertest": "^6.1.3"
   },
