@@ -15,6 +15,15 @@ describe('My First Test', () => {
             cy.url().should('include', '/error');
     });
 
+    it('should visit the signup page', () => {
+        cy.visit('http://localhost:3000/');
+
+        
+        cy.get('#signup').click();
+            
+        cy.url().should('include', '/signup');
+    });
+
     // it()
 });
 
