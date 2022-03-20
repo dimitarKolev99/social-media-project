@@ -39,9 +39,10 @@ const mongoose = require("mongoose");
     .catch((err) => console.log(err));
 } */
 
-if (process.env.MONGO_URI === 'undefined') {
-  mongoose.connect("mongodb://localhost:27017/test_db", {
-    useNewUrlParser : true
+if (!process.env.MONGO_URI) {
+  mongoose.connect("mongodb://localhost:27017/", {
+    useNewUrlParser : true,
+    useUnifiedTopology: true
   });
 } else {
   mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
