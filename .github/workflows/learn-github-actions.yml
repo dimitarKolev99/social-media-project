@@ -19,5 +19,5 @@ jobs:
         with:
           mongodb-version: '5.0'
 
-        run: npm ci
+      - run: npm ci
       - run: npm run test
