@@ -220,6 +220,24 @@ body {
     word-wrap: break-word;
 }
 
+@media (max-width: 35em) {
+    .input {
+        width: 90vw;
+    }
+
+    #form {
+        width: 100vw;
+    }
+
+    .card {
+        border-radius: 0;
+    }
+
+     .btn {
+        width: 97vw;
+    } 
+}
+
 .input:focus {
     outline: none;
     border: 1px solid #1877f2;

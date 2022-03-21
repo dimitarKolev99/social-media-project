@@ -43,6 +43,26 @@ module.exports = {
     else throw 'error';
   },
 
+  previewPic: (req, res, next) => {
+    try {
+      if (!req.files) {
+        res.send({
+          status: false,
+          message: 'No file uploaded'
+        });
+      } else {
+        let avatar = req.files.NAME;
+
+        avatar.mv(path.join('./public/images/', avatar.name));
+
+        res.setHeader('Content-Type', 'application/json');
+        res.end(avatar.name);
+      }
+    } catch (err) {
+      res.status(500).send(err);
+    }
+  },
+
   uploadPostPic: (req, res, next) => {
     if (req.file) {
       const user = req.user;
@@ -52,73 +72,73 @@ module.exports = {
         if (fs.existsSync(`./public/uploads/${user._id}`)) {
 
           var newFileName;
-        
-            Post.create({
-              authorId: req.user._id,
-              content: req.body.content,
-              imageUrl: ``
-            })
-              .then(post => {
-                const postID = post._id;
-                newFileName = `${postID}${path.extname(req.file.originalname)}`;
 
-                fs.rename(
-                  tempPath, path.join(
-                    path.dirname(req.file.originalname), `public/uploads/${user._id}`, newFileName),
-                  err => {
-                    if (err) return console.log(`Error renaming file: ${err.message}`);
+          Post.create({
+            authorId: req.user._id,
+            content: req.body.content,
+            imageUrl: ``
+          })
+            .then(post => {
+              const postID = post._id;
+              newFileName = `${postID}${path.extname(req.file.originalname)}`;
 
-                    Post.findByIdAndUpdate(
-                      { _id: postID },
-                      { imageUrl: `../uploads/${user._id}/${newFileName}` },
-                      function (err) {
-                        if (err) {
+              fs.rename(
+                tempPath, path.join(
+                  path.dirname(req.file.originalname), `public/uploads/${user._id}`, newFileName),
+                err => {
+                  if (err) return console.log(`Error renaming file: ${err.message}`);
 
-                          req.logout();
-                          req.flash("error", "Creating post failed");
-                          res.locals.redirect = "/error";
-                          next();
-                          console.log(`Error updating post: ${error.message}`);
+                  Post.findByIdAndUpdate(
+                    { _id: postID },
+                    { imageUrl: `../uploads/${user._id}/${newFileName}` },
+                    function (err) {
+                      if (err) {
 
-                        }
-
-                        User.findByIdAndUpdate(
-                          { _id: req.user._id },
-                          { $push: { posts: postID } },
-                          { new: true },
-                          function (error, success) {
-                            if (error) {
-                              req.logout();
-                              req.flash("error", "Creating post failed");
-                              res.locals.redirect = "/error";
-                              next();
-                              console.log(`Error updating user: ${error.message}`);
-                            }
-                            req.flash("success", "Your post has been created!");
-                            res.locals.redirect = '/feed';
-                            next();
-        
-                          });
-        
-                  
-                      }
-                    )
-                      .catch(error => {
-                        console.log(`Error updating post: ${error.message}`);
-                        res.locals.redirect = `/feed/create`;
+                        req.logout();
+                        req.flash("error", "Creating post failed");
+                        res.locals.redirect = "/error";
                         next();
-                      });
+                        console.log(`Error updating post: ${error.message}`);
 
-                  });
+                      }
 
-              })
-              .catch(error => {
-                console.log(`Error inserting post: ${error.message}`);
-                res.locals.redirect = `/feed/create`;
-                next();
-              });
+                      User.findByIdAndUpdate(
+                        { _id: req.user._id },
+                        { $push: { posts: postID } },
+                        { new: true },
+                        function (error, success) {
+                          if (error) {
+                            req.logout();
+                            req.flash("error", "Creating post failed");
+                            res.locals.redirect = "/error";
+                            next();
+                            console.log(`Error updating user: ${error.message}`);
+                          }
+                          req.flash("success", "Your post has been created!");
+                          res.locals.redirect = '/feed';
+                          next();
 
-          
+                        });
+
+
+                    }
+                  )
+                    .catch(error => {
+                      console.log(`Error updating post: ${error.message}`);
+                      res.locals.redirect = `/feed/create`;
+                      next();
+                    });
+
+                });
+
+            })
+            .catch(error => {
+              console.log(`Error inserting post: ${error.message}`);
+              res.locals.redirect = `/feed/create`;
+              next();
+            });
+
+
         }
       } catch (err) {
         console.log(`ERROR: ${err.message}`);

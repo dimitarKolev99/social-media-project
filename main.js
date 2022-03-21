@@ -10,6 +10,8 @@ const User = require('./models/user');
 
 const methodOverride = require('method-override')
 
+const fileUpload = require('express-fileupload');
+
 //Sessions, Cookies, Flash messages
 const expressSession = require("express-session"),
   cookieParser = require("cookie-parser"),
@@ -17,6 +19,8 @@ const expressSession = require("express-session"),
 //
 
 const fs = require('fs');
+
+
 const multer = require("multer");
 const expressValidator = require("express-validator");  //npm i express-validator@5.3.0 OTHERWISE THERE MIGHT BE ERRORS
 
@@ -29,6 +33,12 @@ const express = require("express"),
 const mongoose = require("mongoose");
 
 
+//File upload midd
+app.use(fileUpload({
+  createParentPath: true
+}));
+//
+
 /* if (process.env.NODE_ENV === 'test') {
   mongoose.connect("mongodb://localhost:27017/test_db", {
     useNewUrlParser : true
@@ -40,7 +50,7 @@ const mongoose = require("mongoose");
 } */
 
 if (!process.env.MONGO_URI) {
-  mongoose.connect("mongodb://localhost:27017/", {
+  mongoose.connect("mongodb://127.0.0.1:27017/", {
     useNewUrlParser : true,
     useUnifiedTopology: true
   });
@@ -65,6 +75,8 @@ const passport = require("passport");
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -84,6 +96,8 @@ app.use(express.urlencoded({
   extended: true
 }));
 //
+
+
 
 
 app.use(expressValidator());
@@ -108,7 +122,7 @@ app.use(methodOverride("_method", {
 
 app.use(express.static('public'));
 
-var uploadImage = multer({dest: __dirname + '/public/uploads'});
+// var uploadImage = multer({dest: __dirname + '/public/uploads'});
 
 app.get('/product', function(req, res, next) {
   Product.find({}).then(function(products) {
@@ -129,9 +143,9 @@ profileController.redirectView);
 //Profile routes
 app.get("/profile/logout", profileController.logout, profileController.redirectView);
 app.get("/profile/:id", profileController.show, profileController.showView);
-app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
+/* app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
 profileController.redirectView);
-
+ */
 app.get("/profile/:id/edit", profileController.edit);
 
 app.put("/profile/:id/update", profileController.update, profileController.redirectView);
@@ -145,8 +159,11 @@ profileController.redirectView);
 app.get("/feed", feedController.show, feedController.showView);
 app.get("/feed/create", postController.indexView);
 
-app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
-postController.redirectView);
+/* app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
+postController.redirectView); */
+
+app.post('/upload/preview', imagesController.previewPic);
+
 
 app.delete("/feed/:id/delete", postController.delete, postController.redirectView);
 //
