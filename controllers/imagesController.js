@@ -4,6 +4,8 @@ const Post = require('../models/post');
 const path = require('path');
 const fs = require('fs');
 
+const { removeFile } = require('../public/js/removeFolder.js');
+ 
 module.exports = {
 
   uploadProfilePic: (req, res, next) => {
@@ -39,6 +41,15 @@ module.exports = {
   },
 
   previewPic: (req, res, next) => {
+
+    const extnames = ['.jpg', '.png', '.jpeg', '.webp', '.gif'];
+    
+    for (let i = 0; i < extnames.length; i++) {
+      if (fs.existsSync(`./public/images/preview${extnames[i]}`)) {
+        removeFile(`./public/images/preview${extnames[i]}`);
+      } 
+    }
+    
     try {
       if (!req.files) {
         res.send({
@@ -56,6 +67,7 @@ module.exports = {
     } catch (err) {
       res.status(500).send(err);
     }
+      
   },
 
   uploadPostPic: (req, res, next) => {

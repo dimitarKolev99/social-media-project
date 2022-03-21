@@ -1,4 +1,4 @@
-const fs = require("fs")
+const fs = require("fs");
 
 module.exports = {
   removeDir: function(path) {
@@ -20,6 +20,15 @@ module.exports = {
     } else {
       console.log("Directory path not found.");
     }
-  }
+  },
+
+  removeFile: function(path) {
+    if (fs.existsSync(path)) {
+      fs.unlinkSync(path);      
+    } else {
+      console.log("File not found.");
+    }
+  },
+  
   
 } 

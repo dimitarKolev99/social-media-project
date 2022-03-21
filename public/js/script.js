@@ -7,9 +7,22 @@ document.getElementById('btn').addEventListener('click', function () {
 
 async function doRequest() {
     let imgInput = document.getElementById("imageFile");
-    let formData = new FormData(); 
+    let formData = new FormData();
     formData.append(imgInput.name, imgInput.files[0], imgInput.files[0].name);
 
+    
+    let count;
+    for (let pair of formData.entries()) {
+        count++;
+        console.log(count);
+    }
+    
+    if (count > 1) {
+        console.log('YES');
+        formData.delete(imgInput.name);
+        formData.append(imgInput.name, imgInput.files[0], imgInput.files[0].name);
+    } 
+    
     let xhttp = new XMLHttpRequest();
 
     xhttp.open('POST', '/uploadpreview', true);
@@ -33,12 +46,15 @@ async function doRequest() {
 }
 
 function createElement(name) {
-    
+    if (document.getElementById('dynamic-image')) {
+        document.getElementById('dynamic-image').remove();
+    }
     let path = `../images/${name}`;
 
     const tag = document.createElement('img');
 
     tag.setAttribute('src', path);
+    tag.setAttribute('id', 'dynamic-image');
     tag.style.width = '300px';
     const card = document.getElementById('target');
     card.append(tag);
