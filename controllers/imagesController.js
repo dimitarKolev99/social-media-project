@@ -7,19 +7,15 @@ const fs = require('fs');
 module.exports = {
 
   uploadProfilePic: (req, res, next) => {
-    if (req.file) {
-      const tempPath = req.file.path;
-      const newFileName = `profile_pic${path.extname(req.file.originalname)}`;
-
+    if (req.files) {
+      
       let userID = req.params.id;
       try {
         if (fs.existsSync(`./public/uploads/${userID}`)) {
-
-          const targetPath = path.join(
-            path.dirname(req.file.originalname), `public/uploads/${userID}`, newFileName);
-
-          fs.rename(tempPath, targetPath, err => {
-            if (err) return console.log(`Error renaming file: ${err.message}`);
+          
+          let avatar = req.files.NAME;
+          const newFileName = `profile_pic${path.extname(avatar.name)}`;
+          avatar.mv(path.join(`./public/uploads/${userID}`, newFileName));
 
             User.findByIdAndUpdate(userID, {
               $set: { imageUrl: `../uploads/${userID}/${newFileName}` }
@@ -34,7 +30,6 @@ module.exports = {
                 console.log(`Error updating user by ID: ${error.message}`);
                 next(error);
               });
-          });
         }
       } catch (err) {
         console.log(err);
@@ -53,10 +48,10 @@ module.exports = {
       } else {
         let avatar = req.files.NAME;
 
-        avatar.mv(path.join('./public/images/', avatar.name));
+        avatar.mv(path.join(path.dirname(avatar.name), '/public/images/', `preview${path.extname(avatar.name)}`));
 
         res.setHeader('Content-Type', 'application/json');
-        res.end(avatar.name);
+        res.end(`preview${path.extname(avatar.name)}`);
       }
     } catch (err) {
       res.status(500).send(err);
@@ -64,29 +59,27 @@ module.exports = {
   },
 
   uploadPostPic: (req, res, next) => {
-    if (req.file) {
+    if (req.files) {
       const user = req.user;
-      const tempPath = req.file.path;
 
       try {
         if (fs.existsSync(`./public/uploads/${user._id}`)) {
 
           var newFileName;
 
+          var avatar = req.files.NAME;
+
+
           Post.create({
             authorId: req.user._id,
-            content: req.body.content,
+            content: req.body.content ? req.body.content : null,
             imageUrl: ``
           })
             .then(post => {
               const postID = post._id;
-              newFileName = `${postID}${path.extname(req.file.originalname)}`;
+              newFileName = `${postID}${path.extname(avatar.name)}`;
 
-              fs.rename(
-                tempPath, path.join(
-                  path.dirname(req.file.originalname), `public/uploads/${user._id}`, newFileName),
-                err => {
-                  if (err) return console.log(`Error renaming file: ${err.message}`);
+              avatar.mv(path.join(`./public/uploads/${user._id}`, newFileName));
 
                   Post.findByIdAndUpdate(
                     { _id: postID },
@@ -129,7 +122,6 @@ module.exports = {
                       next();
                     });
 
-                });
 
             })
             .catch(error => {
@@ -146,9 +138,19 @@ module.exports = {
 
 
     }
-    else {
-      res.end('<h2>Error uploading file</h2> ');
-    };
+    else if (req.body.content) {
+      Post.create({
+        authorId: req.user._id,
+        content: req.body.content ? req.body.content : '',
+      })
+      .then(() => {
+        req.flash("success", "Your post has been created!");
+        res.locals.redirect = '/feed';
+        next();
+      });
+    } else {
+      res.end('<h2>You cant upload an empty post</h2><a href="/">Go Back</a>');
+    }
   },
 
 };

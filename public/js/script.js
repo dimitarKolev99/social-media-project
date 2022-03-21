@@ -12,7 +12,7 @@ async function doRequest() {
 
     let xhttp = new XMLHttpRequest();
 
-    xhttp.open('POST', '/upload/preview', true);
+    xhttp.open('POST', '/uploadpreview', true);
     xhttp.send(formData);
 
     xhttp.onreadystatechange = function() {

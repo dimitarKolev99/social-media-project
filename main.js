@@ -143,9 +143,8 @@ profileController.redirectView);
 //Profile routes
 app.get("/profile/logout", profileController.logout, profileController.redirectView);
 app.get("/profile/:id", profileController.show, profileController.showView);
-/* app.post('/upload/:id', uploadImage.single("NAME"), imagesController.uploadProfilePic,
-profileController.redirectView);
- */
+app.post('/upload/:id', imagesController.uploadProfilePic, profileController.redirectView);
+
 app.get("/profile/:id/edit", profileController.edit);
 
 app.put("/profile/:id/update", profileController.update, profileController.redirectView);
@@ -159,10 +158,9 @@ profileController.redirectView);
 app.get("/feed", feedController.show, feedController.showView);
 app.get("/feed/create", postController.indexView);
 
-/* app.post('/upload/', uploadImage.single("NAME"), imagesController.uploadPostPic,
-postController.redirectView); */
+app.post('/upload/', imagesController.uploadPostPic, postController.redirectView); 
 
-app.post('/upload/preview', imagesController.previewPic);
+app.post('/uploadpreview', imagesController.previewPic);
 
 
 app.delete("/feed/:id/delete", postController.delete, postController.redirectView);

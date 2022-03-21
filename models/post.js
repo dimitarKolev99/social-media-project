@@ -5,8 +5,7 @@ const postSchema = mongoose.Schema({
     authorId: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
 
     content:{
-        type: String,
-        required: true
+        type: String
     },
     linked:{
         type: String

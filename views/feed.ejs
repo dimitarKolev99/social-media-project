@@ -82,13 +82,18 @@
                                 <%= posts[i].authorId.username %>
                             </a>
                         </div>
+                        <% if (posts[i].content !== null) { %>
 
-                        <p style="margin-left: 1.4rem;">
-                            <%= posts[i].content %>
-                        </p>
-                        <img style="border-top: 1px solid rgba(0, 0, 0, 0.116);
-                        border-bottom: 1px solid rgba(0, 0, 0, 0.116);" src="<%= posts[i].imageUrl %>" width="100%" alt="post photo">
-                        
+                            <p style="margin-left: 1.4rem;">
+                                <%= posts[i].content %>
+                            </p>
+
+                        <% } %>
+
+                        <% if (posts[i].imageUrl) { %>
+                            <img style="border-top: 1px solid rgba(0, 0, 0, 0.116);
+                            border-bottom: 1px solid rgba(0, 0, 0, 0.116);" src="<%= posts[i].imageUrl %>" width="100%" alt="post photo">
+                        <% } %>
                     </div>
 
                 <% } %>
