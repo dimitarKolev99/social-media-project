@@ -38,7 +38,7 @@ module.exports = {
     const postId = req.params.id;
     Post.findByIdAndRemove(postId)
       .then((post) => {
-        if (post.imageUrl != null) {
+        if (post && post.imageUrl != null) {
           let imageID = post.imageUrl.substring(11, post.imageUrl.length);
   
            fs.unlink(`./public/uploads/${imageID}`, (err) => {
@@ -46,7 +46,6 @@ module.exports = {
             req.flash("success", `Post deleted successfully!`);
             res.locals.redirect = `/profile/${req.user._id}`;
             next();
-            console.log('successfully deleted /tmp/hello');
           });
 
         }

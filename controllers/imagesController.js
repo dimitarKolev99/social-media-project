@@ -132,6 +132,7 @@ module.exports = {
                         res.end(JSON.stringify({
                           content: `${req.body.content}`,
                           imageUrl: `../uploads/${user._id}/${newFileName}`,
+                          user: req.user,
                         }));
 
                       } else {
