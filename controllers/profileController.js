@@ -110,19 +110,28 @@ module.exports = {
   show: (req, res, next) => {
     let userId = req.params.id;
     User.findById(userId)
-      .then(user => {
+    .populate({ path: 'posts', options: { sort: { createdAt: -1 } } })
+    .then(user => {
+      console.log(user);
+      res.locals.user = user;
+      next();
 
-        User.populate(user, "posts")
+    })
+    /*   .then(user => {
+
+        User.populate(user, { path: "posts", sort: { createdAt: -1 } })
+        .sort({createdAt: -1})
         .then(user => {
+          console.log(user);
           res.locals.user = user;
           next();
         })
         .catch(error => {
           console.log(`Error populating by ID:${error.message}`);
           next(error);
-        });
+        })
 
-      })
+      }) */
       .catch(error => {
         console.log(`Error fetching user by ID:${error.message}`);
         next(error);

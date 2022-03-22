@@ -158,10 +158,11 @@ profileController.redirectView);
 app.get("/feed", feedController.show, feedController.showView);
 app.get("/feed/create", postController.indexView);
 
-app.post('/upload/', imagesController.uploadPostPic, postController.redirectView); 
+// app.post('/upload/', imagesController.uploadPostPic, postController.redirectView); 
+
+app.post('/upload', imagesController.uploadPost); 
 
 app.post('/uploadpreview', imagesController.previewPic);
-
 
 app.delete("/feed/:id/delete", postController.delete, postController.redirectView);
 //
