@@ -14,13 +14,6 @@
 
 <body>
     <% if (loggedIn) { %>
-
-        <!-- <div class="header">
-            <a id="favicon" href="/">Index</a>
-            <a href="/profile/logout">Log Out</a>
-            
-        </div> -->
-
         
         <div class="card-container">
             
@@ -75,8 +68,8 @@
                     <div class="card">
                         <div class="flex-row" id="card-header">
                             <a href="/profile/<%= posts[i].authorId._id %>">
-                            <img class="avatar" src="<%= posts[i].authorId.imageUrl %>" 
-                            alt="user profile picture">                                
+                                <img class="avatar" src="<%= posts[i].authorId.imageUrl %>" 
+                                alt="user profile picture">                                
                             </a>
                             <a class="name" href="/profile/<%= posts[i].authorId._id %>">
                                 <%= posts[i].authorId.username %>
