@@ -63,7 +63,7 @@ module.exports = {
 
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify({
-          avatarUrl: `preview${path.extname(avatar.name)}`, 
+          avatarUrl: `preview${path.extname(avatar.name)}`,
         }));
       }
     } catch (err) {
@@ -126,7 +126,7 @@ module.exports = {
                       // res.locals.redirect = '/feed';
                       // next();
                       if (req.body.content) {
-                        
+
                         res.setHeader('Content-Type', 'application/json');
                         res.status(200);
                         res.end(JSON.stringify({
@@ -174,17 +174,36 @@ module.exports = {
       Post.create({
         authorId: req.user._id,
         content: req.body.content ? req.body.content : '',
+        imageUrl: null,
       })
-        .then(() => {
-          req.flash("success", "Your post has been created!");
-          // res.locals.redirect = '/feed';
-          // next();
+        .then((post) => {
+          User.findByIdAndUpdate(
+            { _id: req.user._id },
+            { $push: { posts: post._id } },
+            { new: true },
+            function (error, success) {
+              if (error) {
+                req.logout();
+                req.flash("error", "Creating post failed");
+                res.locals.redirect = "/error";
+                next();
+                console.log(`Error updating user: ${error.message}`);
+              }
+              req.flash("success", "Your post has been created!");
+                res.setHeader('Content-Type', 'application/json');
+                res.status(200);
+                res.end(JSON.stringify({
+                  content: `${req.body.content}`,
+                }));
+              
+            });
           
-          res.status(200);
-          res.end(JSON.stringify({
-            content: `${req.body.content}`,
-          }));
-        });
+        })
+        .catch(error => {
+          res.status(404);
+          res.end('<h2>Sorry, there was an error</h2><a href="/feed">Go Back</a>');
+        
+        });;
     } else {
       res.end('<h2>You cant upload an empty post</h2><a href="/">Go Back</a>');
     }
