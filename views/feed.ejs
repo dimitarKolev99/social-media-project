@@ -36,6 +36,47 @@
                         </a>
                         <a class="btn" id="btn" style="margin-bottom: 0.2rem; padding: 0.5rem;">Post</a>
                         </form>
+
+                        <!-- MODAL-->
+                        <div class="post-modal flex-column-index">
+
+                            <div class="modal" style="background: red;">
+                                <h2>Create a post</h2>
+
+                            </div>
+
+                            <div class="flex-row" id="card-header" style="background: pink;">
+                                <a href="/profile/<%= currentUser._id %>">
+                                    <img class="avatar" src="<%= currentUser.imageUrl %>"
+                                        alt="user profile picture">
+                                </a>
+                                <p class="name">
+                                    <%= currentUser.username %>
+                                </p>
+                            </div>
+                                
+                            <div class="modal">
+                                <input type="text" style="margin: 0; margin-bottom: 0.1rem;" class="input"
+                                    name="content" id="content" 
+                                    placeholder="How are you today?">
+
+                            </div>
+
+                                <div>
+                                    <input style="display: none;" type="file" accept="image/*" name="NAME" id="imageFile">
+                                    <a onclick="openWindow()" id="pic_upl_btn" style="margin-left: 3.7rem;">
+                                        <img id="pic_upl" src="../images/pic_icon.svg" alt="picture icon">
+                                    </a>
+                                </div>
+
+                                <div>
+                                    <a class="btn" id="btn" style="margin-bottom: 0.2rem; padding: 0.5rem;">Post</a>
+
+                                </div>
+                            
+                        </div>
+                        <!--  MODAL END-->
+                    
                     </div>
                 </div>
             </div>

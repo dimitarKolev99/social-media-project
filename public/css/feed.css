@@ -58,6 +58,34 @@
 }
 
  .avatar:hover {
-     opacity: 0.9;
+    opacity: 0.9;
+ }
+
+ .post-modal {
+    position: fixed;
+    z-index: 10;
+    top: 10em;
+    bottom: 10em;
+    left: 32vw;
+    right: 32vw;
+    background: #ffffff; 
+
+    border: 1px solid rgba(0,0,0,.125);
+    box-shadow: 0 0 0 70vw rgba(0, 0, 0, 0.2);
+
+    overflow-y: scroll;
+
+    padding: 0;
+    margin: 0;
+ }
+
+ .modal {
+     background: black;
+
+     width: 100%;
+     height: 60%;
+
+     padding: 0;
+     margin: 0;
  }
 
