@@ -222,11 +222,11 @@ body {
 
 @media (max-width: 35em) {
     .input {
-        width: 90vw;
+        width: 80vw;
     }
 
     #form {
-        width: 100vw;
+        width: 90vw;
     }
 
     .card {
@@ -234,7 +234,7 @@ body {
     }
 
      .btn {
-        width: 97vw;
+        width: 87vw;
     } 
 }
 

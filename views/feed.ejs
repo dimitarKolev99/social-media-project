@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/feed.css">
     <script src="../js/script.js" defer></script>
     <script src="../js/lazyloading.js" defer></script>
+    <script src="../js/modal.js" defer></script>
 </head>
 
 <body>
@@ -25,8 +26,10 @@
                         </a>
                         <div class="search">
                             <form id="postForm" enctype="multipart/form-data" action="/upload/" method="post">
-                                <input type="text" style="margin: 0; margin-bottom: 0.1rem;" class="input"
-                                    name="content" id="content" placeholder="How are you today?"><br>
+                                <a>
+                                    <input type="text" style="margin: 0; margin-bottom: 0.1rem;" class="input"
+                                        name="content" id="content" placeholder="How are you today?"><br>
+                                </a>
                         </div>
                     </div>
                     <div class="flex-row">
@@ -38,13 +41,15 @@
                         </form>
 
                         <!-- MODAL-->
-                        <div class="post-modal flex-column-index">
+                        <div class="post-modal flex-column-modal" is-open="false">
+                            <img id="close" src="../images/close.svg" alt="close button">
 
-                            <div class="modal header-modal" style="background: red;">
-                                <h2 style="text-align: center;">Create a post</h2>
+                            <div class="modal header-modal">
+                                <h2 style="text-align: center; margin: 0;">Create a post</h2>
 
-                                <div class="flex-row-modal" style="background: pink;">
-                                    <a style="width: 43.2px; height: 43.2px;" href="/profile/<%= currentUser._id %>">
+                                <div class="flex-row-modal">
+                                    <a id="a-profile" style="width: 43.2px; height: 43.2px;"
+                                        href="/profile/<%= currentUser._id %>">
                                         <img class="avatar" src="<%= currentUser.imageUrl %>"
                                             alt="user profile picture">
                                     </a>
@@ -56,14 +61,26 @@
                             </div>
 
                             <div class="modal-content-input">
-                               <!--  <input type="text" style="margin: 0;" class="modal-input"
+                                <!--  <input type="text" style="margin: 0;" class="modal-input"
                                     name="content" id="content" placeholder="How are you today?"> -->
-                                
-                                
-                                    <textarea name="content" id="content"
+
+
+                                <!-- <div class="modal-input" style="width: 500px;
+                                 height: 100%; overflow-x: hidden" contenteditable="true">99
+                                 </div> -->
+
+                                <span class="textarea modal-input" role="textbox" contenteditable></span>
+
+                                <!-- <textarea name="content" id="content"
                                  class="modal-input" placeholder="How are you today?"
                                  style="width: 500px; height: 100%; overflow-x: hidden"
-                                ></textarea>
+                                ></textarea> -->
+
+                                <div class="preview" data-hidden="true">
+                                    <div id="preview-img" onclick="openWindow()">
+                                        <p id="preview-img-p">Add your photo here</p>
+                                    </div>
+                                </div>
 
                             </div>
 
@@ -74,11 +91,11 @@
                                     <h4 style="margin: 0;">Add a picture to your post</h4>
                                 </div>
 
-                                <div class="x-wrapper" onclick="openWindow()" id="pic_upl_btn">
+                                <div class="x-wrapper" id="pic_upl_btn">
                                     <i title="Add Image" class="x"></i>
 
                                 </div>
-                              
+
                             </div>
 
                             <div>
