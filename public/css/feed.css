@@ -132,7 +132,8 @@
     align-items: center;
     justify-content: center;
     border: 1px solid rgba(0,0,0,.125);
-    margin: 1rem;
+    /* margin: 1rem; */
+    margin: 0 auto;
 }
 
  .x-wrapper {
@@ -282,8 +283,20 @@
     cursor: pointer;
     padding: 0.5rem;
     border-radius: 50px;
+    margin: 1rem;
 }
 
 #close:hover {
     background-color: rgba(0,0,0,.125);
+}
+
+#wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.modal-post-btn {
+    padding: 0 !important;
 }
