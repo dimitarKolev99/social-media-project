@@ -40,70 +40,59 @@
                         <!-- MODAL-->
                         <div class="post-modal flex-column-index">
 
-                            <div class="modal" style="background: red;">
-                                <h2>Create a post</h2>
+                            <div class="modal header-modal" style="background: red;">
+                                <h2 style="text-align: center;">Create a post</h2>
 
-                            </div>
-
-                            <div class="flex-row" id="card-header" style="background: pink;">
-                                <a href="/profile/<%= currentUser._id %>">
-                                    <img class="avatar" src="<%= currentUser.imageUrl %>"
-                                        alt="user profile picture">
-                                </a>
-                                <p class="name">
-                                    <%= currentUser.username %>
-                                </p>
-                            </div>
-                                
-                            <div class="modal">
-                                <input type="text" style="margin: 0; margin-bottom: 0.1rem;" class="input"
-                                    name="content" id="content" 
-                                    placeholder="How are you today?">
-
-                            </div>
-
-                                <div>
-                                    <input style="display: none;" type="file" accept="image/*" name="NAME" id="imageFile">
-                                    <a onclick="openWindow()" id="pic_upl_btn" style="margin-left: 3.7rem;">
-                                        <img id="pic_upl" src="../images/pic_icon.svg" alt="picture icon">
+                                <div class="flex-row-modal" style="background: pink;">
+                                    <a style="width: 43.2px; height: 43.2px;" href="/profile/<%= currentUser._id %>">
+                                        <img class="avatar" src="<%= currentUser.imageUrl %>"
+                                            alt="user profile picture">
                                     </a>
+                                    <p class="name" style="margin: 0;">
+                                        <%= currentUser.username %>
+                                    </p>
                                 </div>
 
-                                <div>
-                                    <a class="btn" id="btn" style="margin-bottom: 0.2rem; padding: 0.5rem;">Post</a>
+                            </div>
+
+                            <div class="modal-content-input">
+                               <!--  <input type="text" style="margin: 0;" class="modal-input"
+                                    name="content" id="content" placeholder="How are you today?"> -->
+                                
+                                
+                                    <textarea name="content" id="content"
+                                 class="modal-input" placeholder="How are you today?"
+                                 style="width: 500px; height: 100%; overflow-x: hidden"
+                                ></textarea>
+
+                            </div>
+
+                            <div class="modal-img-input">
+                                <input style="display: none;" type="file" accept="image/*" name="NAME" id="imageFile">
+
+                                <div style="margin: 1rem;">
+                                    <h4 style="margin: 0;">Add a picture to your post</h4>
+                                </div>
+
+                                <div class="x-wrapper" onclick="openWindow()" id="pic_upl_btn">
+                                    <i title="Add Image" class="x"></i>
 
                                 </div>
-                            
+                              
+                            </div>
+
+                            <div>
+                                <a class="btn" id="btn" style="margin-bottom: 0.2rem; padding: 0.5rem;">Post</a>
+
+                            </div>
+
                         </div>
                         <!--  MODAL END-->
-                    
+
                     </div>
                 </div>
             </div>
 
-            <!--                 <div class="flex-row">
-                    <div>
-                        <a href="/profile/<%= currentUser._id %>">
-                            <img src="<%= currentUser.imageUrl %>" alt="profile picture"
-                            style="border-radius: 50px; 
-                            object-fit: cover; width: 2.7rem; aspect-ratio: 1;">
-                        </a>
-                    </div>
-
-                    <div>
-                        <div class="search">
-                            <form id="postForm" enctype="multipart/form-data" action="/upload/" method="post">
-                                <input type="text" name="content" id="content" placeholder="Content"><br>
-                                <input style="display: none;" type="file" accept="image/*" name="NAME" id="imageFile">
-                                <a onclick="do2()" id="pic_upl_btn">
-                                    <img id="pic_upl" src="../images/pic_icon.svg" alt="picture icon">
-                                </a>
-                                <a class="btn" id="btn">Post</a>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
             <div id="target2">
                 <% if (posts !==undefined) { %>
                     <% for (var i=0; i < posts.length; i++) { %>
