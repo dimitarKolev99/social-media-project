@@ -54,13 +54,14 @@ function doRequest(method, url, imgInput, contentInput) {
         if (this.readyState == 4 && this.status == 200) {
             let res = JSON.parse(xhttp.response);
 
-
-            if (res.content && res.imageUrl) {
+            let target = document.getElementById('preview-img');
+            createImageElement(res.avatarUrl, target);
+            /*  if (res.content && res.imageUrl) {
                 let parentNode = document.getElementById('target2').parentNode;
                 let sp2 = document.getElementById('target2');
                 parentNode.insertBefore(createCard(res.user._id, res.user.imageUrl,
                     res.user.username, res.content, res.imageUrl), sp2);
-            }
+            } */
 
 /*             if (res.avatarUrl) {
                 createImageElement(res.avatarUrl);
@@ -119,19 +120,27 @@ function createImageElementPost(name) {
     tag.before(document.getElementById('target2'));
 }
 
-function createImageElement(name) {
+
+function createImageElement(name, target) {
     if (document.getElementById('dynamic-image')) {
-        document.getElementById('dynamic-image').remove();
+    
+    document.querySelector('#dynamic-image').remove();
+    
+    } else if (document.getElementById('preview-img-p')) {
+        document.getElementById('preview-img-p').remove();
     }
+
+    
     let path = `../images/${name}`;
+    let tag = document.createElement('img');
 
-    const tag = document.createElement('img');
-
+    
     tag.setAttribute('src', path);
     tag.setAttribute('id', 'dynamic-image');
     tag.style.width = '100%';
-    const card = document.getElementById('target');
-    card.append(tag);
+    
+    target.append(tag);
+
 }
 
 imgInput.addEventListener('change', function () {
