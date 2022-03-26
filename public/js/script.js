@@ -81,6 +81,9 @@ function doRequest(method, url, imgInput, contentInput) {
     }
 }
 
+
+
+
 function createParaElement(res) {
 
     let tag = document.createElement('p');
@@ -177,8 +180,132 @@ var card = function (user, post) {
 }
 
 ///////////////////////////
+
+function create(type, properties, appendTarget, beforeNode) {
+    let el = document.createElement(type);
+    for (let key in properties) {
+        console.log(key.toString() + ' ' + properties[key].toString());
+        el.setAttribute(key.toString(), properties[key].toString());
+    }
+
+    if (appendTarget != undefined) {
+        appendTarget.append(el);
+    } else if (beforeNode != undefined) {
+        beforeNode.parentNode.insertBefore(el, beforeNode);
+    }
+    
+/*     let parentNode = beforeNode.parentNode;
+    parentNode.insertBefore(el, beforeNode); 
+ */
+    if (el.nodeName == 'div') {
+
+    }
+    return el;
+}
+
+// let y = create('div', { src: '/', width: '500px', style: 'background-color: rgba(0,0,0,1);' }, undefined, document.querySelector('#target2'));
+// let x = create('img', { src: '/', width: '300px' }, y);
+
+
+//  createCard(123);
+
+let chapters = [
+{
+    id: 1,
+    parent_id: null,
+    attributes: { 'class': '' }
+}, 
+{
+    id: 2,
+    parent_id: null,
+    text: 'Chapter 2',
+},
+/* {
+    id: 3,
+    parent_id: null,
+    text: 'Chapter 3',
+},
+{
+    id: 4,
+    parent_id: 1,
+    text: 'Chapter 1.1',
+}, 
+{
+    id: 5, 
+    parent_id: 1,
+    text: 'Chapter 1.2',
+},
+{
+    id: 6,
+    parent_id: 1,
+    text: 'Chapter 1.3',
+},
+{
+    id: 7,
+    parent_id: 3,
+    text: 'Chapter 3.1',
+},
+{
+    id: 8,
+    parent_id: 3,
+    text: 'Chapter 3.2',
+},
+{
+    id: 9,
+    parent_id: 5,
+    text: 'Chapter 1.2.1',
+}, 
+{
+    id: 10,
+    parent_id: 5,
+    text: 'Chapter 1.2.2',
+},
+{
+    id: 11,
+    parent_id: 7,
+    text: 'Chapter 3.1.1',
+},
+{
+    id: 12,
+    parent_id: 7,
+    text: 'Chapter 3.1.2',
+}
+ */];
+
+function topLevel(data) {
+    return data.filter(node => !node.parent_id);
+}
+
+function tree(data) {
+    return topLevel(data).map(each => {
+        each.children = traverse(data, each.id);
+        return each;
+    });
+}
+
+function traverse(data, parentId) {
+    const children = data.filter(each => each.parent_id === parentId);
+    children.forEach(child => {
+        child.children = traverse(data, child.id);
+    });
+    return children;
+}
+
+
+console.log(tree(chapters));
+
 function createCard(profileUrl, profilePicUrl, username, content, postPicUrl) {
-    const card = document.createElement('div');
+    let target = document.querySelector('#target2');
+    
+     
+    
+    create('a', { href: `/profile/${profileUrl}`}, 
+    create('div', { class: 'flex-row', id: 'card-header' }, 
+    create('div', { class: 'card' }, undefined, target)));
+    // create('div', { class: 'flex-row', id: 'card-header' }, create('div', { class: 'card' }, undefined, target));
+
+    
+/*     const card = document.createElement('div');
     card.setAttribute('class', 'card');
     const cardHeader = document.createElement('div');
     cardHeader.setAttribute('class', 'flex-row');
@@ -221,5 +348,5 @@ function createCard(profileUrl, profilePicUrl, username, content, postPicUrl) {
     card.append(img2);
 
     return card;
-}
+ */}
 
