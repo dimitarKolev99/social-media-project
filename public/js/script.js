@@ -1,9 +1,19 @@
-// import  { cardElProps, create, topLevel, tree, traverse } from './createElementTree.js';
+import { cardElProps, create, topLevel, tree, traverse } from './createElementTree.js';
+import { doRequest } from './ajaxRequest.js';
+
+
 var imgInput = document.getElementById("imageFile");
 var contentInput = document.getElementById("content");
 var textarea = document.querySelector('#content-input-textarea');
-var cardContainer = document.getElementById("target1");
 var form = document.getElementById('postForm');
+
+
+imgInput.addEventListener('change', function () {
+    if (imgInput.value) {
+        doRequest('POST', '/uploadpreview', imgInput);
+    }
+
+});
 
 form.addEventListener('onsubmut', function (event) {
     event.preventDefault();
@@ -40,7 +50,7 @@ document.getElementById('btn').addEventListener('click', function () {
 });
 
 
-function doRequest(method, url, imgInput, contentInput) {
+/* function doRequest(method, url, imgInput, contentInput) {
     let formData = new FormData();
     let xhttp = new XMLHttpRequest();
 
@@ -52,13 +62,13 @@ function doRequest(method, url, imgInput, contentInput) {
         xhttp.send(formData);
     }
 
-   /*  if (contentInput) {
+     if (contentInput) {
         formData.set(contentInput.name, contentInput.value);
 
         xhttp.open(method, url, true);
         xhttp.send(formData);
 
-    } */
+    } 
 
 
     xhttp.onreadystatechange = function () {
@@ -94,9 +104,9 @@ function doRequest(method, url, imgInput, contentInput) {
             } else if (res.status) {
                 createErrorElement();
             }
- */        }
+      }
     }
-}
+} */
 
 
 
@@ -124,51 +134,6 @@ function createErrorElement() {
 
 }
 
-function createImageElementPost(name) {
-    if (document.getElementById('dynamic-image')) {
-        document.getElementById('dynamic-image').remove();
-    }
-    let path = `../images/${name}`;
-
-    const tag = document.createElement('img');
-
-    tag.setAttribute('src', path);
-    tag.setAttribute('id', 'dynamic-image');
-    tag.style.width = '100%';
-    const cardContainer = document.getElementById('target1');
-    cardContainer.append(tag);
-    tag.before(document.getElementById('target2'));
-}
-
-
-function createImageElement(name, target) {
-    if (document.getElementById('dynamic-image')) {
-    
-    document.querySelector('#dynamic-image').remove();
-    
-    } else if (document.getElementById('preview-img-p')) {
-        document.getElementById('preview-img-p').remove();
-    }
-
-    
-    let path = `../images/${name}`;
-    let tag = document.createElement('img');
-
-    
-    tag.setAttribute('src', path);
-    tag.setAttribute('id', 'dynamic-image');
-    tag.style.width = '100%';
-    
-    target.append(tag);
-
-}
-
-imgInput.addEventListener('change', function () {
-    if (imgInput.value) {
-        doRequest('POST', '/uploadpreview', imgInput);
-    }
-
-});
 
 function openWindow() {
     imgInput.click();
@@ -177,7 +142,7 @@ function openWindow() {
 
 ///////////////////////////
 
-const cardElProps = function(user, content, imageUrl) {
+/* const cardElProps = function(user, content, imageUrl) {
     return [
         {
             id: 1,
@@ -289,7 +254,7 @@ function traverse(data, parentId) {
     });
     return arrayEls;
 }
-
+ */
 
 
 // let y = create('div', { src: '/', width: '500px', style: 'background-color: rgba(0,0,0,1);' }, undefined, document.querySelector('#target2'));
