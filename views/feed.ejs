@@ -8,6 +8,7 @@
     <title>Social Media | Feed</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/css/feed.css">
+    <!-- <script type="module" src="../js/createElementTree.js" defer></script> -->
     <script src="../js/script.js" defer></script>
     <script src="../js/lazyloading.js" defer></script>
     <script src="../js/modal.js" defer></script>
@@ -73,7 +74,7 @@
                                  height: 100%; overflow-x: hidden" contenteditable="true">99
                                  </div> -->
 
-                                <span class="textarea modal-input" role="textbox" contenteditable></span>
+                                <span id="content-input-textarea" class="textarea modal-input" role="textbox" contenteditable></span>
 
                                 <!-- <textarea name="content" id="content"
                                  class="modal-input" placeholder="How are you today?"
@@ -81,7 +82,7 @@
                                 ></textarea> -->
 
                                 <div class="preview" data-hidden="true">
-                                    <div id="preview-img" onclick="openWindow()">
+                                    <div id="preview-img">
                                         <p id="preview-img-p">Add your photo here</p>
                                         <img id="close-prev" src="../images/close.svg" alt="close button">
                                     </div>
@@ -105,7 +106,6 @@
 
                             <div>
                                 <a class="btn" id="btn" style="margin-bottom: 0.2rem;">Post</a>
-
                             </div>
 
                         </div>

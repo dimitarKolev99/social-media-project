@@ -1,30 +1,40 @@
+// import  { cardElProps, create, topLevel, tree, traverse } from './createElementTree.js';
 var imgInput = document.getElementById("imageFile");
 var contentInput = document.getElementById("content");
+var textarea = document.querySelector('#content-input-textarea');
 var cardContainer = document.getElementById("target1");
-
-
 var form = document.getElementById('postForm');
-
 
 form.addEventListener('onsubmut', function (event) {
     event.preventDefault();
 });
 
+document.querySelector('#preview-img').addEventListener('click', () => {    
+    openWindow();   
+});
+
 document.getElementById('btn').addEventListener('click', function () {
 
-    
-    /* let parentNode = document.getElementById('target2').parentNode;
-    let sp2 = document.getElementById('target2');
-    parentNode.insertBefore(createCard(), sp2); */
+    let modal = document.querySelector('.post-modal');
+    if (modal.getAttribute('is-open') === 'true') {
+        modal.setAttribute('is-open', 'false');
+    }
 
+    if (textarea.textContent !== '' || imgInput.value !== '') {
+        doRequest('POST', '/upload', imgInput.value != null ? imgInput : undefined,
+            textarea.textContent
+        ) 
+    } else {
+        alert('Please add content or image');
+    }
 
-    if (contentInput.value !== '' || imgInput.value !== '') {
+ /*    if (contentInput.value !== '' || imgInput.value !== '') {
         doRequest('POST', '/upload', imgInput.value != null ? imgInput : undefined,
             contentInput.value ? contentInput : undefined
         ) 
     } else {
         alert('Please add content or image');
-    }
+    } */
     contentInput.value = '';
     imgInput.value = '';
 });
@@ -34,28 +44,35 @@ function doRequest(method, url, imgInput, contentInput) {
     let formData = new FormData();
     let xhttp = new XMLHttpRequest();
 
-    if (imgInput && imgInput.value) {
+    if (imgInput && imgInput.value && contentInput != '') {
         formData.set(imgInput.name, imgInput.files[0], imgInput.files[0].name);
+        formData.set('content', contentInput);        
 
         xhttp.open(method, url, true);
         xhttp.send(formData);
     }
 
-    if (contentInput && contentInput.value) {
+   /*  if (contentInput) {
         formData.set(contentInput.name, contentInput.value);
 
         xhttp.open(method, url, true);
         xhttp.send(formData);
 
-    }
+    } */
 
 
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             let res = JSON.parse(xhttp.response);
 
-            let target = document.getElementById('preview-img');
-            createImageElement(res.avatarUrl, target);
+            if (res.avatarUrl) {
+                let target = document.getElementById('preview-img');
+                createImageElement(res.avatarUrl, target);
+            } else if (res.content && res.imageUrl) {
+                console.log('YOU CALLED ME');
+                let data = cardElProps(res.user, res.content, res.imageUrl);
+                tree(data);
+            }
             /*  if (res.content && res.imageUrl) {
                 let parentNode = document.getElementById('target2').parentNode;
                 let sp2 = document.getElementById('target2');
@@ -157,128 +174,100 @@ function openWindow() {
     imgInput.click();
 }
 
-var card = function (user, post) {
-    return `<div class="card">
-    <div class="flex-row" id="card-header">
-        <a href="/profile/${document.createTextNode(user)}">
-            <img class="avatar" src="${document.createTextNode(user)}" 
-            alt="user profile picture">                                
-        </a>
-        <a class="name" href="/profile/${document.createTextNode(user)}">
-            ${document.createTextNode(user)}
-        </a>
-    </div>
-    
-        <p style="margin-left: 1.4rem;">
-            ${document.createTextNode(post)}
-        </p>
-    
-        <img style="border-top: 1px solid rgba(0, 0, 0, 0.116);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.116);" src="${document.createTextNode(post)}" width="100%" alt="post photo">
-    </div>
-    `;
-}
 
 ///////////////////////////
 
-function create(type, properties, appendTarget, beforeNode) {
+const cardElProps = function(user, content, imageUrl) {
+    return [
+        {
+            id: 1,
+            parent_id: null,
+            type: 'div',
+            attributes: { 'class': 'card' },
+            mount: document.querySelector('#target2'),
+        },
+        {
+            id: 2,
+            parent_id: 1,
+            type: 'div',
+            attributes: { class: 'flex-row', id: 'card-header' },
+            mount: '',
+        },
+        {
+            id: 3,
+            parent_id: 2,
+            type: 'a',
+            attributes: { href: `/profile/${user._id}` },
+        },
+        {
+            id: 4,
+            parent_id: 3,
+            type: 'img',
+            attributes: {
+                class: "avatar", 
+                alt: "user profile picture",
+                src: `${user.imageUrl}`,
+            },
+        },
+        {
+            id: 5,
+            parent_id: 2,
+            type: 'a',
+            attributes: { class: 'name', href: `${user._id}` },
+            innerHTML: `${user.username}`,
+        },
+        {
+            id: 6,
+            parent_id: 1,
+            type: 'p',
+            attributes: { style: "margin-left: 1.4rem;" },
+            innerHTML: `${content}`,
+        },
+        {
+            id: 7,
+            parent_id: 1,
+            type: 'img',
+            attributes: {
+                style: "border-top: 1px solid rgba(0, 0, 0, 0.116); border-bottom: 1px solid rgba(0, 0, 0, 0.116);",
+                src: `${imageUrl}`, width: "100%", alt: "post photo"
+            },
+        }];
+    
+} 
+
+function create(type, properties, appendTarget, beforeNode, innerHTML) {
     let el = document.createElement(type);
     for (let key in properties) {
-        console.log(key.toString() + ' ' + properties[key].toString());
         el.setAttribute(key.toString(), properties[key].toString());
     }
 
     if (appendTarget != undefined) {
-        appendTarget.append(el);
+        appendTarget.appendChild(el);
     } else if (beforeNode != undefined) {
         beforeNode.parentNode.insertBefore(el, beforeNode);
+    } else if (innerHTML != null) {
+        el.innerHTML = innerHTML;
     }
-    
-/*     let parentNode = beforeNode.parentNode;
-    parentNode.insertBefore(el, beforeNode); 
- */
-    if (el.nodeName == 'div') {
 
-    }
     return el;
 }
 
-// let y = create('div', { src: '/', width: '500px', style: 'background-color: rgba(0,0,0,1);' }, undefined, document.querySelector('#target2'));
-// let x = create('img', { src: '/', width: '300px' }, y);
-
-
-//  createCard(123);
-
-let chapters = [
-{
-    id: 1,
-    parent_id: null,
-    attributes: { 'class': '' }
-}, 
-{
-    id: 2,
-    parent_id: null,
-    text: 'Chapter 2',
-},
-/* {
-    id: 3,
-    parent_id: null,
-    text: 'Chapter 3',
-},
-{
-    id: 4,
-    parent_id: 1,
-    text: 'Chapter 1.1',
-}, 
-{
-    id: 5, 
-    parent_id: 1,
-    text: 'Chapter 1.2',
-},
-{
-    id: 6,
-    parent_id: 1,
-    text: 'Chapter 1.3',
-},
-{
-    id: 7,
-    parent_id: 3,
-    text: 'Chapter 3.1',
-},
-{
-    id: 8,
-    parent_id: 3,
-    text: 'Chapter 3.2',
-},
-{
-    id: 9,
-    parent_id: 5,
-    text: 'Chapter 1.2.1',
-}, 
-{
-    id: 10,
-    parent_id: 5,
-    text: 'Chapter 1.2.2',
-},
-{
-    id: 11,
-    parent_id: 7,
-    text: 'Chapter 3.1.1',
-},
-{
-    id: 12,
-    parent_id: 7,
-    text: 'Chapter 3.1.2',
-}
- */];
-
 function topLevel(data) {
-    return data.filter(node => !node.parent_id);
+    const filter = data.filter(node => !node.parent_id);
+    filter.forEach(each => {
+        each.element = create(each.type, each.attributes, null, each.mount);
+    });
+
+    return filter;
 }
 
 function tree(data) {
     return topLevel(data).map(each => {
-        each.children = traverse(data, each.id);
+        traverse(data, each.id).forEach(el => {
+            each.element.appendChild(el);
+
+        });
+
         return each;
     });
 }
@@ -286,13 +275,29 @@ function tree(data) {
 function traverse(data, parentId) {
     const children = data.filter(each => each.parent_id === parentId);
     children.forEach(child => {
-        child.children = traverse(data, child.id);
+        child.element = create(child.type, child.attributes, null, null,
+            child.innerHTML ? child.innerHTML : null);
+
+        traverse(data, child.id).forEach(el => {
+            child.element.appendChild(el);
+
+        });
     });
-    return children;
+    let arrayEls = [];
+    children.map(each => {
+        arrayEls.push(each.element);
+    });
+    return arrayEls;
 }
 
 
-console.log(tree(chapters));
+
+// let y = create('div', { src: '/', width: '500px', style: 'background-color: rgba(0,0,0,1);' }, undefined, document.querySelector('#target2'));
+// let x = create('img', { src: '/', width: '300px' }, y);
+
+
+//  createCard(123);
+
 
 function createCard(profileUrl, profilePicUrl, username, content, postPicUrl) {
     let target = document.querySelector('#target2');
