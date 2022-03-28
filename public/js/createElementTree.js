@@ -37,14 +37,18 @@ function cardElProps(user, content, imageUrl) {
                 attributes: { class: 'name', href: `${user._id}` },
                 innerHTML: `${user.username}`,
             },
-            {
+            content != null ? {
                 id: 6,
                 parent_id: 1,
                 type: 'p',
                 attributes: { style: "margin-left: 1.4rem;" },
                 innerHTML: `${content}`,
-            },
+            } :
             {
+                id: 6,
+                parent_id: 0,                
+            },
+            imageUrl != null ? {
                 id: 7,
                 parent_id: 1,
                 type: 'img',
@@ -52,7 +56,12 @@ function cardElProps(user, content, imageUrl) {
                     style: "border-top: 1px solid rgba(0, 0, 0, 0.116); border-bottom: 1px solid rgba(0, 0, 0, 0.116);",
                     src: `${imageUrl}`, width: "100%", alt: "post photo"
                 },
-            }];
+            } : 
+            {
+                id: 7,
+                parent_id: 0,                
+            }
+        ];
 
 }
 

@@ -27,9 +27,10 @@ function doRequest(method, url, imgInput, contentInput) {
     let formData = new FormData();
     let xhttp = new XMLHttpRequest();
 
-    if (imgInput && imgInput.value && contentInput != '') {
-        formData.set(imgInput.name, imgInput.files[0], imgInput.files[0].name);
-        formData.set('content', contentInput);
+    if (imgInput != null && imgInput.value != '' || contentInput != '') {
+        imgInput != null && imgInput.value != '' ? 
+        formData.set(imgInput.name, imgInput.files[0], imgInput.files[0].name) : null;
+        contentInput != '' ? formData.set('content', contentInput) : null;
 
         xhttp.open(method, url, true);
         xhttp.send(formData);
@@ -51,7 +52,7 @@ function doRequest(method, url, imgInput, contentInput) {
             if (res.avatarUrl) {
                 let target = document.getElementById('preview-img');
                 createImageElement(res.avatarUrl, target);
-            } else if (res.content && res.imageUrl) {
+            } else if (res.content || res.imageUrl) {
                 let data = cardElProps(res.user, res.content, res.imageUrl);
                 tree(data);
             }

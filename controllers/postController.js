@@ -48,6 +48,11 @@ module.exports = {
             next();
           });
 
+        } else {
+          req.flash("success", `Post deleted successfully!`);
+          res.locals.redirect = `/profile/${req.user._id}`;
+          next();
+                  
         }
 
       })

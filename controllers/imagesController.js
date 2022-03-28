@@ -140,6 +140,7 @@ module.exports = {
                         res.status(200);
                         res.end(JSON.stringify({
                           imageUrl: `../uploads/${user._id}/${newFileName}`,
+                          user: req.user,
                         }));
 
                       }
@@ -195,6 +196,7 @@ module.exports = {
                 res.status(200);
                 res.end(JSON.stringify({
                   content: `${req.body.content}`,
+                  user: req.user,
                 }));
               
             });
@@ -209,7 +211,6 @@ module.exports = {
       res.end('<h2>You cant upload an empty post</h2><a href="/">Go Back</a>');
     }
   },
-
 
   uploadPostPic: (req, res, next) => {
     if (req.files) {
