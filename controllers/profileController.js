@@ -71,7 +71,7 @@ module.exports = {
 
     User.register(newUser, req.body.password, (error, user) => {
       if(user) {
-        let folderName = `./public/uploads/${user._id}`;
+        let folderName = `${appRoot}/public/uploads/${user._id}`;
 
         try {
           if (fs.existsSync(folderName) === false) {

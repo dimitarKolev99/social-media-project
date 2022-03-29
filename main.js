@@ -26,10 +26,11 @@ const expressValidator = require("express-validator");  //npm i express-validato
 
 require('dotenv').config();
 const express = require("express"),
-  path = require("path"),
-  app = express(),
-  layouts = require("express-ejs-layouts");
+path = require("path"),
+app = express(),
+layouts = require("express-ejs-layouts");
 
+global.appRoot = path.resolve(__dirname);
 const mongoose = require("mongoose");
 
 
