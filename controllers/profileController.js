@@ -74,7 +74,7 @@ module.exports = {
         let folderName = `./public/uploads/${user._id}`;
 
         try {
-          if (!fs.existsSync(folderName)) {
+          if (fs.existsSync(folderName) === false) {
 
             fs.mkdirSync(folderName);
 
