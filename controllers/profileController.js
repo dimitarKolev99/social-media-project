@@ -74,10 +74,11 @@ module.exports = {
         let folderName = `${appRoot}/public/uploads/${user._id}`;
 
         try {
-            if (!existsSync(`${appRoot}/public/uploads`) {
+            if (!fs.existsSync(`${appRoot}/public/uploads`)) {
               fs.mkdirSync(`${appRoot}/public/uploads`);            
             }
-            if (!existsSync(`${appRoot}/public/uploads/${user._id}`) {            
+
+            if (!fs.existsSync(`${appRoot}/public/uploads/${user._id}`)) {            
               fs.mkdirSync(`${appRoot}/public/uploads/${user._id}`);
             }
 
