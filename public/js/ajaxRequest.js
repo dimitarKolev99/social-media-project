@@ -4,11 +4,8 @@ import { cardElProps, create, topLevel, tree, traverse } from './createElementTr
 function createImageElement(name, target) {
     if (document.getElementById('dynamic-image')) {
     
-    document.querySelector('#dynamic-image').remove();
-    
-    } else if (document.getElementById('preview-img-p')) {
-        document.getElementById('preview-img-p').remove();
-    }
+        document.querySelector('#dynamic-image').remove();        
+    } 
 
     
     let path = `../images/${name}`;
@@ -34,8 +31,11 @@ function doRequest(method, url, imgInput, contentInput) {
 
         xhttp.open(method, url, true);
         xhttp.send(formData);
-    }
+    } else {
 
+        xhttp.open(method, url, true);
+    }
+    
     /*  if (contentInput) {
          formData.set(contentInput.name, contentInput.value);
  

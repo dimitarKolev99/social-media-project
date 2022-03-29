@@ -251,6 +251,7 @@
 
 #preview-img {
     cursor: pointer;
+    position: relative;
     
     border-radius: 10px;
     border: 1px solid rgba(0,0,0,.125);
@@ -266,6 +267,7 @@
 }
 
 #preview-img-p {
+    
     margin-top: 0;
     margin-bottom: 0;
     margin-left: auto;
@@ -329,6 +331,17 @@
 #close-prev {
 
     z-index: 10;
-    position:relative;
+    position: absolute;
+    top: 2px;
+    right: 2px;
+
+    padding: 0.3rem;
+    
+
+}
+
+#close-prev:hover {
+    background-color: rgba(0,0,0,.125);
+    border-radius: 50px;
 
 }

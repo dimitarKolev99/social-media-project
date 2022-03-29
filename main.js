@@ -163,6 +163,7 @@ app.get("/feed/create", postController.indexView);
 app.post('/upload', imagesController.uploadPost); 
 
 app.post('/uploadpreview', imagesController.previewPic);
+app.delete('/uploadpreview', imagesController.deletePreviewPic);
 
 app.delete("/feed/:id/delete", postController.delete, postController.redirectView);
 //

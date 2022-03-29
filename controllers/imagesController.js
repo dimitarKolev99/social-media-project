@@ -72,6 +72,18 @@ module.exports = {
 
   },
 
+  deletePreviewPic: (req, res, next) => {
+    const extnames = ['.jpg', '.png', '.jpeg', '.webp', '.gif', '.svg'];
+
+    for (let i = 0; i < extnames.length; i++) {
+      if (fs.existsSync(`./public/images/preview${extnames[i]}`)) {
+        removeFile(`./public/images/preview${extnames[i]}`);
+      }
+    }
+
+    res.status(200).end();
+  },
+
   uploadPost: (req, res, next) => {
 
     if (req.files) {

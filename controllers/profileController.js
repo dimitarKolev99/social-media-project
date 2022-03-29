@@ -112,7 +112,6 @@ module.exports = {
     User.findById(userId)
     .populate({ path: 'posts', model: 'Post', options: { sort: { createdAt: -1 } } })
     .then(user => {
-      console.log(user);
       res.locals.user = user;
       next();
     })

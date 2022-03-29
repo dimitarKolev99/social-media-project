@@ -34,7 +34,7 @@ function cardElProps(user, content, imageUrl) {
                 id: 5,
                 parent_id: 2,
                 type: 'a',
-                attributes: { class: 'name', href: `${user._id}` },
+                attributes: { class: 'name', href: `/profile/${user._id}` },
                 innerHTML: `${user.username}`,
             },
             content != null ? {
