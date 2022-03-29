@@ -9,9 +9,11 @@
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/feed.css">
   <link href="../css/profile.css" rel="stylesheet" type="text/css" />
+  <script src="../js/uploadProfilePic.js" defer></script>
 </head>
 
 <body>
+
 
   <div class="flex-column-index" style="gap: 1rem;">
     <img class="avatar" style="width: 10rem;" src="<%= user.imageUrl %>" alt="profile pic" width="200px">
@@ -19,9 +21,9 @@
     <% if (String(user._id)==String(currentUser._id)) { %>
 
       <div class="card input">
-        <form method="post" enctype="multipart/form-data" action="/upload/<%= user._id %>">
-          <input type="file" accept="image/*" name="NAME">
-          <input type="submit" value="Upload Profile Pic!">
+        <form id="frm" method="post" enctype="multipart/form-data" action="/upload/<%= user._id %>">
+          <input id="inp--file" type="file" accept="image/*" name="NAME">
+          <input id="inp--button" type="submit" value="Upload Profile Pic!">
         </form>
       </div>
       <% } %>

@@ -305,4 +305,12 @@ body {
     color: inherit;
   }
 
+  .info {
+      position: absolute;
+      top: 2px;
+      left: 31vw;
+
+      border: 1px solid black;
+      padding: 1rem;
+  }
 

@@ -65,7 +65,7 @@ function cardElProps(user, content, imageUrl) {
 
 }
 
-function create(type, properties, appendTarget, beforeNode, innerHTML) {
+function create(type, properties, appendTarget, referenceNode, innerHTML) {
         let el = document.createElement(type);
         for (let key in properties) {
             el.setAttribute(key.toString(), properties[key].toString());
@@ -73,8 +73,8 @@ function create(type, properties, appendTarget, beforeNode, innerHTML) {
 
         if (appendTarget != undefined) {
             appendTarget.appendChild(el);
-        } else if (beforeNode != undefined) {
-            beforeNode.parentNode.insertBefore(el, beforeNode);
+        } else if (referenceNode != undefined) {
+            referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
         } else if (innerHTML != null) {
             el.innerHTML = innerHTML;
         }

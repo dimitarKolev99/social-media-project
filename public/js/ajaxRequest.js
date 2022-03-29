@@ -3,20 +3,19 @@ import { cardElProps, create, topLevel, tree, traverse } from './createElementTr
 
 function createImageElement(name, target) {
     if (document.getElementById('dynamic-image')) {
+        let path = `../images/${name}`;
+        document.getElementById('dynamic-image').setAttribute('src', path);
+        console.log(document.getElementById('dynamic-image'));
+    } else {
+        let path = `../images/${name}`;
+        let tag = document.createElement('img');
     
-        document.querySelector('#dynamic-image').remove();        
-    } 
-
-    
-    let path = `../images/${name}`;
-    let tag = document.createElement('img');
-
-    
-    tag.setAttribute('src', path);
-    tag.setAttribute('id', 'dynamic-image');
-    tag.style.width = '100%';
-    
-    target.append(tag);
+        tag.setAttribute('src', path);
+        tag.setAttribute('id', 'dynamic-image');
+        tag.style.width = '100%';
+        
+        target.append(tag);
+    }
 
 }
 
