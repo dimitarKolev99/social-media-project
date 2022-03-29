@@ -74,7 +74,12 @@ module.exports = {
         let folderName = `${appRoot}/public/uploads/${user._id}`;
 
         try {
-            fs.mkdirSync(folderName);
+            if (!existsSync(`${appRoot}/public/uploads`) {
+              fs.mkdirSync(`${appRoot}/public/uploads`);            
+            }
+            if (!existsSync(`${appRoot}/public/uploads/${user._id}`) {            
+              fs.mkdirSync(`${appRoot}/public/uploads/${user._id}`);
+            }
 
             User.findByIdAndUpdate(user._id, {
               $set: { imageUrl: `../images/fb_default.jpg` }
