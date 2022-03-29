@@ -74,8 +74,6 @@ module.exports = {
         let folderName = `${appRoot}/public/uploads/${user._id}`;
 
         try {
-          if (fs.existsSync(folderName) === false) {
-
             fs.mkdirSync(folderName);
 
             User.findByIdAndUpdate(user._id, {
@@ -92,7 +90,7 @@ module.exports = {
               next();
             });
 
-          }
+          
         } catch (err) {
           req.flash("error", `Failed to create user account because: ${err.message}.`)
           res.locals.redirect = "/signup";
