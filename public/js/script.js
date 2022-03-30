@@ -10,7 +10,7 @@ var form = document.getElementById('postForm');
 
 imgInput.addEventListener('change', function () {
     if (imgInput.value) {
-        doRequest('POST', '/uploadpreview', imgInput);
+        doRequest('POST', '/uploadpreview', imgInput, null);
     }
 
 });

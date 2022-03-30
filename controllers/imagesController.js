@@ -61,7 +61,9 @@ module.exports = {
 
         avatar.mv(path.join(path.dirname(avatar.name), '/public/images/', `preview${path.extname(avatar.name)}`));
 
-        res.setHeader('Content-Type', 'application/json');
+        res.setHeader(
+          'Content-Type', 'application/json');
+        res.set('Cache-Control', 'no-cache, no-store');
         res.end(JSON.stringify({
           avatarUrl: `preview${path.extname(avatar.name)}`,
         }));
